@@ -1,5 +1,4 @@
 /* DEFINICIÓN DE CLASES */
-
 class CJugador {
     constructor(nombre) {
         this.Nombre = nombre;
@@ -12,7 +11,7 @@ class CCoordenada {
     constructor(x = 0, y = 0) {
         this.X = x;
         this.Y = y;
-        this.Simbolo = 'X';
+        this.Simbolo = '';
         this.Libre = true;
     }
 
