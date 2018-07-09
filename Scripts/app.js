@@ -1,31 +1,42 @@
 /* DEFINICIÓN DE CLASES */
 class CJugador {
-    constructor(nombre) {
+    constructor(nombre, simbolo) {
         this.Nombre = nombre;
         this.Puntaje = 0;
+        this.Simbolo = simbolo;
     }
 }
 
 class CCoordenada {
-
     constructor(x = 0, y = 0) {
         this.X = x;
         this.Y = y;
         this.Simbolo = '';
+        this.Puntaje = 0;
         this.Libre = true;
     }
-
 }
 
 class CJuego {
     constructor(filas = 3, columnas = 3) {
         this.Filas = filas;
         this.Columnas = columnas;
+        this.Turno = 'j1';
+        this.ObtenerFilasColumnas();
         this.InicializarMatriz();
+        this.InicializarTabla();
+        this.j1 = new CJugador('', 'X');
+        this.maquina = new CJugador('', 'O');
+    }
+
+    ObtenerFilasColumnas() {
+        this.Filas = parseInt(document.getElementById('filas').value);
+        this.Columnas = parseInt(document.getElementById('columnas').value);
     }
 
     //Creación de objetos en la matriz de juego
     InicializarMatriz() {
+        this.Tablero = '';
         this.Tablero = new Array(this.Filas);
         for (let i = 0; i < this.Filas; ++i) {
             this.Tablero[i] = new Array(this.Columnas);
@@ -34,6 +45,44 @@ class CJuego {
             }
         }
         return this;
+    }
+
+    InicializarTabla() {
+        let contenedor = document.getElementById('contenedor');
+        contenedor.innerHTML = '';
+        let tabla = document.createElement('table');
+        for (let i = 0; i < this.Filas; ++i) {
+            let fila = document.createElement('tr');
+            for (let j = 0; j < this.Columnas; ++j) {
+                let celda = document.createElement('td');
+                celda.setAttribute('id', i + '-' + j);
+                //Cuando el usuario da click
+                celda.addEventListener('click', (evento) => {
+                    evento.currentTarget.innerText = this.Jugar(celda);
+                });
+                fila.appendChild(celda);
+            }
+            tabla.appendChild(fila);
+        }
+        contenedor.appendChild(tabla);
+        return this;
+    }
+
+    Jugar(celda) {
+        if (this.EsCeldaVacia(celda)) {
+            if (this.Turno) {
+                this.Turno = false;
+                return this.j1.Simbolo;
+            } else {
+                this.Turno = true;
+                return this.maquina.Simbolo;
+            }
+        } else return celda.innerText;
+    }
+
+    EsCeldaVacia(celda) {
+        if (celda.innerText === '') return true;
+        else return false;
     }
 
     ImprimirTableroConsola() {
@@ -92,6 +141,6 @@ class CJuego {
     }
 }
 
-let juego = new CJuego(5, 5);
-
-juego.ImprimirTableroConsola().ContarPuntaje();
+document.getElementById('botonJugar').addEventListener('click', () => {
+    let juego = new CJuego();
+});
