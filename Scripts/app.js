@@ -12,12 +12,12 @@ class CJugador {
 }
 class CIA extends CJugador {
 
-    BloaquearJugada(jugada, limite, Tablero) {
+    BloaquearJugada(jugada, limitex,limitey, Tablero) {
         for (y = jugada.y - 2; y <= jugada.y + 2; y++) {
             for (x = jugada.x - 2; x <= jugada.x + 2; x++) {
-                if (y < 0 || y > limite)
+                if (y < 0 || y > limitex)
                     break;
-                if (x < 0 || x > limite)
+                if (x < 0 || x > limitey)
                     continue;
                 if (Tablero[y][x].Simbolo == jugada.Simbolo) {
                     if (this.EvaluarJugada(x, y, jugada, Tablero))
@@ -27,7 +27,7 @@ class CIA extends CJugador {
         }
         return false;
     }
-    EvaluarJugada(x, y, jugada, Tablero) {
+    EvaluarJugada(x, y, jugada, Tablero,limitex,limitey) {
         if (y > jugada.y)
             dy = -1;
         else {
@@ -46,7 +46,7 @@ class CIA extends CJugador {
         }
         seguir = true;
         choque = true;
-        while (seguir && y + dy >= 0 && y + dy <= limite && x + dx >= 0 && x + dx <= limite) {
+        while (seguir && y + dy >= 0 && y + dy <= limitey && x + dx >= 0 && x + dx <= limitex) {
             if (Tablero[y + dy][x + dx].simbolo === "") {
                 Tablero[y + dy][x + dx].simbolo = this.simbolo;
                 this.jugada = Tablero[y + dy][x + dx];
@@ -68,10 +68,17 @@ class CIA extends CJugador {
         return !seguir;
     }
 
-    jugarIA(jugada, limite, Tablero) {
-        if (!this.BloaquearJugada(jugada, limite, Tablero)) {
-           // if (this.jugada != null)
-                
+    jugarIA(jugada, limitex,limitey, Tablero) {
+        if (!this.BloaquearJugada(jugada, limitex,limitey, Tablero)) {
+            if (this.jugada != null)
+                this.BloaquearJugada(this.jugada, limitex,limitey, Tablero);
+            else {
+                Tablero[0][0].simbolo = this.simbolo;
+                this.jugada = Tablero[0][0];
+            }
+
+
+
         }
     }
 }
@@ -94,6 +101,7 @@ class CJuego {
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
+        this.IA=new CIA("Ultron",'J');
     }
 
     ObtenerFilasColumnas() {
@@ -125,7 +133,8 @@ class CJuego {
                 celda.setAttribute('id', i + '-' + j);
                 //Cuando el usuario da click
                 celda.addEventListener('click', (evento) => {
-                    evento.currentTarget.innerText = this.Jugar(celda);
+                    evento.currentTarget.innerText = this.Jugar(celda, i ,j);
+
                 });
                 fila.appendChild(celda);
             }
@@ -135,10 +144,12 @@ class CJuego {
         return this;
     }
 
-    Jugar(celda) {
+    Jugar(celda,i , j) {
         if (this.EsCeldaVacia(celda)) {
             if (this.Turno) {
-                this.Turno = false;
+                this.Turno = true;
+                this.Tablero[i][j]=this.j1.Simbolo;
+                this.IA.jugarIA(this.Tablero[i][j],columnas,filas,this.Tablero);
                 return this.j1.Simbolo;
             } else {
                 this.Turno = true;
