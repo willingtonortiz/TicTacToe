@@ -1,18 +1,86 @@
 /* DEFINICIÓN DE CLASES */
 class CJugador {
-    constructor(nombre) {
+    constructor(nombre, simbolo) {
         this.Nombre = nombre;
         this.Puntaje = 0;
+        this.Simbolo = simbolo;
+        this.jugada = null;
+    }
+    jugada(CCoordenada) {
+        this.jugada = CCoordenada;
     }
 }
+class CIA extends CJugador {
 
+    BloaquearJugada(jugada, limite, Tablero) {
+        for (y = jugada.y - 2; y <= jugada.y + 2; y++) {
+            for (x = jugada.x - 2; x <= jugada.x + 2; x++) {
+                if (y < 0 || y > limite)
+                    break;
+                if (x < 0 || x > limite)
+                    continue;
+                if (Tablero[y][x].Simbolo == jugada.Simbolo) {
+                    if (this.EvaluarJugada(x, y, jugada, Tablero))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+    EvaluarJugada(x, y, jugada, Tablero) {
+        if (y > jugada.y)
+            dy = -1;
+        else {
+            if (y == jugada.y)
+                dy = 0;
+            else
+                dy = +1;
+        }
+        if (x > jugada.x)
+            dx = -1;
+        else {
+            if (x == jugada.x)
+                dx = 0;
+            else
+                dx = +1;
+        }
+        seguir = true;
+        choque = true;
+        while (seguir && y + dy >= 0 && y + dy <= limite && x + dx >= 0 && x + dx <= limite) {
+            if (Tablero[y + dy][x + dx].simbolo === "") {
+                Tablero[y + dy][x + dx].simbolo = this.simbolo;
+                this.jugada = Tablero[y + dy][x + dx];
+                seguir = false;
+            }
+            else {
+                if (Tablero[y + dy][x + dx].simbolo === this.simbolo) {
+                    dy *= -1;
+                    dx *= -1;
+                    if (choque == true)
+                        choque = false;
+                    else
+                        break;
+                }
+            }
+            x += dx;
+            y += dy;
+        }
+        return !seguir;
+    }
+
+    jugarIA(jugada, limite, Tablero) {
+        if (!this.BloaquearJugada(jugada, limite, Tablero)) {
+            if (this.jugada != null)
+                
+        }
+    }
+}
 class CCoordenada {
 
     constructor(x = 0, y = 0) {
         this.X = x;
         this.Y = y;
         this.Simbolo = '';
-        this.Libre = true;
     }
 
 }
