@@ -122,7 +122,7 @@ font-family: 'Raleway', sans-serif;
  
 }
 #CopyNeon1{
-    animation: CopyNeon1 3s infinite linear;
+    animation: CopyNeon1 3s  linear;
 }
 @keyframes CopyNeon1{
 
@@ -139,7 +139,7 @@ font-family: 'Raleway', sans-serif;
 
 }
 #CopyNeon2{
-    animation: CopyNeon2 8s infinite linear;
+    animation: CopyNeon2 8s  linear;
 }
 @keyframes CopyNeon2{
 
@@ -160,7 +160,7 @@ font-family: 'Raleway', sans-serif;
 }
 
 #CopyNeon3{
-    animation: CopyNeon3 10s infinite linear;
+    animation: CopyNeon3 10s  linear;
 }
 @keyframes CopyNeon3{
 
@@ -180,7 +180,7 @@ font-family: 'Raleway', sans-serif;
 
 }
 #CopyNeon4{
-    animation: CopyNeon4 5s infinite linear;
+    animation: CopyNeon4 5s  linear;
 }
 @keyframes CopyNeon4{
 
@@ -200,7 +200,7 @@ font-family: 'Raleway', sans-serif;
 
 }
 #CopyNeon5{
-    animation: CopyNeon5 2s infinite linear;
+    animation: CopyNeon5 2s  linear;
 }
 @keyframes CopyNeon5{
 
