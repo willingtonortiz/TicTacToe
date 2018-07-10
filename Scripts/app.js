@@ -101,7 +101,6 @@ class CJuego {
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
-        this.IA=new CIA("Ultron",'J');
     }
 
     ObtenerFilasColumnas() {
@@ -133,7 +132,7 @@ class CJuego {
                 celda.setAttribute('id', i + '-' + j);
                 //Cuando el usuario da click
                 celda.addEventListener('click', (evento) => {
-                    evento.currentTarget.innerText = this.Jugar(celda, i ,j);
+                    evento.currentTarget.innerText = this.Jugar(celda);
 
                 });
                 fila.appendChild(celda);
@@ -144,12 +143,10 @@ class CJuego {
         return this;
     }
 
-    Jugar(celda,i , j) {
+    Jugar(celda) {
         if (this.EsCeldaVacia(celda)) {
             if (this.Turno) {
                 this.Turno = true;
-                this.Tablero[i][j]=this.j1.Simbolo;
-                this.IA.jugarIA(this.Tablero[i][j],columnas,filas,this.Tablero);
                 return this.j1.Simbolo;
             } else {
                 this.Turno = true;
