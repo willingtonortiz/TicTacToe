@@ -96,12 +96,21 @@ class CJuego {
         this.Filas = filas;
         this.Columnas = columnas;
         this.Turno = 'j1';
+       
         this.ObtenerFilasColumnas();
+        var onlyNumbers=/\w/;
+        if(!onlyNumbers.test(this.Filas) && !onlyNumbers.test(this.Columnas))
+        {       
         this.InicializarMatriz();
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
         return this;
+        }
+        else
+        {
+            alert("Solo ingresar numeros");
+        }
     }
 
     //Obtiene las filas y las columnas de los inputs
