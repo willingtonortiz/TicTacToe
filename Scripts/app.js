@@ -134,7 +134,7 @@ class CJuego {
         }
 
         //Conteo diagonal
-        for (let i = 0, k = 0; i < this.Filas; ++i, ++j) {
+        /*for (let i = 0, k = 0; i < this.Filas; ++i, ++j) {
             for (let j = i + k; j < this.Columnas; ++j) {
                 if (this.Tablero[i][j].Simbolo === 'X') {
                     contador1++;
@@ -147,7 +147,7 @@ class CJuego {
                 if (contador2 >= 3) puntaje2++;
             }
             contador1 = contador2 = 0;
-        }
+        }*/
 
         console.log(puntaje1, puntaje2);
         return this;
