@@ -13,7 +13,6 @@ class CCoordenada {
         this.Y = y;
         this.Simbolo = '';
         this.Puntaje = 0;
-        this.Libre = true;
     }
 }
 
@@ -135,6 +134,20 @@ class CJuego {
         }
 
         //Conteo diagonal
+        for (let i = 0, k = 0; i < this.Filas; ++i, ++j) {
+            for (let j = i + k; j < this.Columnas; ++j) {
+                if (this.Tablero[i][j].Simbolo === 'X') {
+                    contador1++;
+                    contador2 = 0;
+                } else {
+                    contador1 = 0;
+                    contador2++;
+                }
+                if (contador1 >= 3) puntaje1++;
+                if (contador2 >= 3) puntaje2++;
+            }
+            contador1 = contador2 = 0;
+        }
 
         console.log(puntaje1, puntaje2);
         return this;
