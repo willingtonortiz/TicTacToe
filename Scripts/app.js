@@ -92,27 +92,48 @@ class CCoordenada {
 
 class CJuego {
     //Contructor
-    constructor(filas = 3, columnas = 3) {
-        this.Filas = filas;
-        this.Columnas = columnas;
+    constructor(filas = "", columnas = "") {
+        this.Filas = Number(filas);
+        this.Columnas = Number(columnas);
         this.Turno = 'j1';
-       
+        this.onlyNumbers=/^([0-9])*$/;
         this.ObtenerFilasColumnas();
-        var onlyNumbers=/\w/;
-        if(!onlyNumbers.test(this.Filas) && !onlyNumbers.test(this.Columnas))
-        {       
+        if(this.ValidacionNumeros()){       
         this.InicializarMatriz();
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
         return this;
         }
-        else
-        {
-            alert("Solo ingresar numeros");
-        }
-    }
 
+    }
+    ValidacionNumeros()
+    {
+        if(isNaN(this.Filas) && isNaN(this.Columnas) )
+        {
+            alert("Ingresar Valores Correctamente");
+            return false;
+        }
+     
+        if(isNaN(this.Filas) && !isNaN(this.Columnas))
+        {
+            alert("Ingresar Cantidad de Filas");
+            return false;
+        }
+        if(!isNaN(this.Filas) && isNaN(this.Columnas) )
+        {
+            alert("Ingresar Cantidad de Columnas");
+            return false;
+        }
+        if( !this.onlyNumbers.test(this.filas) ||  !this.onlyNumbers.test(this.columnas) )//si encuentra una letra retorar falso
+        {       
+            alert("Solo ingresar numeros");
+            return false;
+
+        }
+        return true;
+
+    }
     //Obtiene las filas y las columnas de los inputs
     ObtenerFilasColumnas() {
         this.Filas = parseInt(document.getElementById('filas').value);
