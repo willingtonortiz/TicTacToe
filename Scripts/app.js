@@ -11,12 +11,12 @@ class CCoordenada {
     constructor(x = 0, y = 0) {
         this.X = x;
         this.Y = y;
-        this.Simbolo = '';
-        this.Puntaje = 0;
+        this.Simbolo = 'X';
     }
 }
 
 class CJuego {
+    //Contructor
     constructor(filas = 3, columnas = 3) {
         this.Filas = filas;
         this.Columnas = columnas;
@@ -26,14 +26,16 @@ class CJuego {
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
+        return this;
     }
 
+    //Obtiene las filas y las columnas de los inputs
     ObtenerFilasColumnas() {
         this.Filas = parseInt(document.getElementById('filas').value);
         this.Columnas = parseInt(document.getElementById('columnas').value);
     }
 
-    //Creación de objetos en la matriz de juego
+    //Creación la matriz del juego
     InicializarMatriz() {
         this.Tablero = '';
         this.Tablero = new Array(this.Filas);
@@ -46,6 +48,7 @@ class CJuego {
         return this;
     }
 
+    //Crea la tabla que se mestra en la pantalla
     InicializarTabla() {
         let contenedor = document.getElementById('contenedor');
         contenedor.innerHTML = '';
@@ -67,6 +70,7 @@ class CJuego {
         return this;
     }
 
+    //Realiza una iteracion en el juego
     Jugar(celda) {
         if (this.EsCeldaVacia(celda)) {
             if (this.Turno) {
@@ -79,11 +83,13 @@ class CJuego {
         } else return celda.innerText;
     }
 
+    //Devuelve true si la celda esta vacia
     EsCeldaVacia(celda) {
         if (celda.innerText === '') return true;
         else return false;
     }
 
+    //Funcion que imprime el tablero en la consola
     ImprimirTableroConsola() {
         for (let i = 0; i < this.Filas; ++i) {
             let cadena = '';
@@ -95,12 +101,12 @@ class CJuego {
         return this;
     }
 
+    //Funcion que cuenta los puntajes de los jugadores
     ContarPuntaje() {
         let puntaje1 = 0,
             contador1 = 0;
         let puntaje2 = 0,
             contador2 = 0;
-
         //Conteo horizontal
         for (let i = 0; i < this.Filas; ++i) {
             for (let j = 0; j < this.Columnas; ++j) {
@@ -134,22 +140,52 @@ class CJuego {
         }
 
         //Conteo diagonal
-        /*for (let i = 0, k = 0; i < this.Filas; ++i, ++j) {
-            for (let j = i + k; j < this.Columnas; ++j) {
-                if (this.Tablero[i][j].Simbolo === 'X') {
-                    contador1++;
-                    contador2 = 0;
-                } else {
-                    contador1 = 0;
-                    contador2++;
+        //Diagonal de 135 grados
+        let cantDiag = this.Filas + this.Columnas - 1,
+            maxDiag = Math.max(this.Filas, this.Columnas),
+            inicio1 = this.Filas - 1,
+            inicio2 = 0;
+        for (let m = 0; m < cantDiag; ++m) {
+            for (let n = 0; n < maxDiag; ++n) {
+                if (this.Tablero[inicio1 + n] !== undefined && this.Tablero[inicio1 + n][inicio2 + n] !== undefined) {
+                    if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'X') {
+                        contador1++;
+                        contador2 = 0;
+                    } else {
+                        contador2++;
+                        contador1 = 0;
+                    }
+                    if (contador1 >= 3) puntaje1++;
+                    if (contador2 >= 3) puntaje2++;
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
             }
+            if (inicio1 !== 0) inicio1--;
+            else inicio2++;
             contador1 = contador2 = 0;
-        }*/
-
-        console.log(puntaje1, puntaje2);
+        }
+        //Diagonal de 45 grados
+        inicio1 = 0;
+        inicio2 = 0;
+        for (let m = 0; m < cantDiag; ++m) {
+            for (let n = 0; n < maxDiag; ++n) {
+                if (this.Tablero[inicio1 - n] !== undefined && this.Tablero[inicio1 - n][inicio2 + n] !== undefined) {
+                    if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'X') {
+                        contador1++;
+                        contador2 = 0;
+                    } else {
+                        contador2++;
+                        contador1 = 0;
+                    }
+                    if (contador1 >= 3) puntaje1++;
+                    if (contador2 >= 3) puntaje2++;
+                }
+            }
+            if (inicio1 !== this.Filas - 1) inicio1++;
+            else inicio2++;
+            contador1 = contador2 = 0;
+        }
+        //puntaje1 tiene el puntaje del jugador 1
+        //puntaje2 tiene el puntaje del jugador 2 o maquina
         return this;
     }
 }
