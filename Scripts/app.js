@@ -375,4 +375,21 @@ class CJuego {
 
 document.getElementById('botonJugar').addEventListener('click', () => {
     let juego = new CJuego();
+    var _tr = document.getElementsByTagName('tr');
+    var _td = document.getElementsByTagName('td');
+    if(_tr.length > 3 && _tr.length< 100){
+        for(var i  = 0 ; i<_td.length; i++){
+            _td[i].style.height="50px";
+            _td[i].style.width="50px";
+            _td[i].style.fontSize ="36px";
+        }
+    }
+    if(_tr.length > 9 && _tr.length< 16){
+        for(var i  = 0 ; i<_td.length; i++){
+            _td[i].style.height="30px";
+            _td[i].style.width="30px";
+            _td[i].style.fontSize ="18px";
+        }
+    }
+    
 });

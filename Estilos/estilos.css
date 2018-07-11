@@ -55,7 +55,7 @@
     align-items: center;
     margin: 0 auto;
     font-size: 36px;
-    font-weight: 100;
+    font-weight: 10;
 }
 
 #tic {
@@ -151,13 +151,7 @@
     flex-flow: column wrap;
 }
 
-.container-juego {
-    color: #eee;
-    font-family: mySpace;
-    color: #ff1c3e;
-    text-shadow: 0 0 10px #ff1c3e;
-    font-size: 36px;
-}
+
 
 .neon-svg {
     opacity: 0;
@@ -167,6 +161,12 @@
     animation: neonAI 6s linear;
 }
 
+#puntaje{
+    color: #ff1c3e;
+    font-family: mySpace;
+    text-shadow: 0 0 10px #ff1c3e;
+    font-size: 36px;
+}
 .marcador{
     display: flex;
     justify-content: space-between;
@@ -195,9 +195,11 @@ table {
 
 tr,
 td {
-    width: 50px;
-    height: 50px;
+    font-family: mySpace;
     text-align: center;
+    font-size: 36px;
+    color: #306cf7;
+
 }
 
 table,
