@@ -11,49 +11,61 @@ class CJugador {
     }
 }
 class CIA extends CJugador {
-
-    BloaquearJugada(jugada, limitex,limitey, Tablero) {
-        for (y = jugada.y - 2; y <= jugada.y + 2; y++) {
-            for (x = jugada.x - 2; x <= jugada.x + 2; x++) {
-                if (y < 0 || y > limitex)
+    PensarJugada(jugada, limitex, limitey, Tablero) {
+        for (let y = jugada.Y - 2; y <= jugada.Y + 2; y++) {
+            for (let x = jugada.X - 2; x <= jugada.X + 2; x++) {
+                if (y < 0 || y >= limitex)
                     break;
-                if (x < 0 || x > limitey)
+                if (x < 0 || x >= limitey)
                     continue;
-                if (Tablero[y][x].Simbolo == jugada.Simbolo) {
-                    if (this.EvaluarJugada(x, y, jugada, Tablero))
+                if (Tablero[y][x].Simbolo == jugada.Simbolo && Tablero[y][x] != jugada) {
+                    if (this.EvaluarJugada(x, y, jugada, Tablero, limitex, limitey))
                         return true;
                 }
             }
         }
         return false;
     }
-    EvaluarJugada(x, y, jugada, Tablero,limitex,limitey) {
-        if (y > jugada.y)
+    EvaluarJugada(x, y, jugada, Tablero, limitex, limitey) {
+        let dy, dx;
+        if (y > jugada.Y)
             dy = -1;
         else {
-            if (y == jugada.y)
+            if (y == jugada.Y)
                 dy = 0;
             else
                 dy = +1;
         }
-        if (x > jugada.x)
+        if (x > jugada.X)
             dx = -1;
         else {
-            if (x == jugada.x)
+            if (x == jugada.X)
                 dx = 0;
             else
                 dx = +1;
         }
-        seguir = true;
-        choque = true;
-        while (seguir && y + dy >= 0 && y + dy <= limitey && x + dx >= 0 && x + dx <= limitex) {
-            if (Tablero[y + dy][x + dx].simbolo === "") {
-                Tablero[y + dy][x + dx].simbolo = this.simbolo;
+        if ((y - jugada.Y == 2 || y - jugada.Y == -2) && (x - jugada.X == 1 || x - jugada.X == -1))
+            return false;
+        if ((x - jugada.X == 2 || x - jugada.X == -2) && (y - jugada.Y == 1 || y - jugada.Y == -1))
+            return false;
+        let seguir = true;
+        let choque = true;
+        while (seguir) {
+            if (y + dy < 0 || y + dy >= limitey || x + dx < 0 || x + dx >= limitex) {
+                dy *= -1;
+                dx *= -1;
+                if (choque == true)
+                    choque = false;
+                else
+                    break;
+            }
+            if (Tablero[y + dy][x + dx].Simbolo == '') {
+                Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
                 this.jugada = Tablero[y + dy][x + dx];
                 seguir = false;
             }
             else {
-                if (Tablero[y + dy][x + dx].simbolo === this.simbolo) {
+                if (Tablero[y + dy][x + dx].Simbolo === this.Simbolo) {
                     dy *= -1;
                     dx *= -1;
                     if (choque == true)
@@ -62,24 +74,29 @@ class CIA extends CJugador {
                         break;
                 }
             }
+
             x += dx;
             y += dy;
         }
         return !seguir;
     }
 
-    jugarIA(jugada, limitex,limitey, Tablero) {
-        if (!this.BloaquearJugada(jugada, limitex,limitey, Tablero)) {
-            if (this.jugada != null)
-                this.BloaquearJugada(this.jugada, limitex,limitey, Tablero);
-            else {
-                Tablero[0][0].simbolo = this.simbolo;
-                this.jugada = Tablero[0][0];
+    jugarIA(jugada, limitex, limitey, Tablero) {
+        if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
+            if (this.jugada != null) {
+                if (!this.PensarJugada(this.jugada, limitex, limitey, Tablero)) {
+                    this.jugada.Simbolo = '';
+                    this.PensarJugada(this.jugada, limitex, limitey, Tablero);
+                }
             }
-
-
-
+            else {
+                Tablero[0][0].Simbolo = this.Simbolo;
+                this.jugada = Tablero[0][0];
+                alert("primer turno");
+            }
         }
+        else alert("jugada evitada");
+        alert("se jugo en: "+this.jugada.X+" "+this.jugada.Y);
     }
 }
 class CCoordenada {
@@ -101,7 +118,7 @@ class CJuego {
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
         this.maquina = new CJugador('', 'O');
-        this.IA=new CIA("Ultron",'J');
+        this.IA = new CIA("Ultron", 'J');
     }
 
     ObtenerFilasColumnas() {
@@ -116,7 +133,7 @@ class CJuego {
         for (let i = 0; i < this.Filas; ++i) {
             this.Tablero[i] = new Array(this.Columnas);
             for (let j = 0; j < this.Columnas; ++j) {
-                this.Tablero[i][j] = new CCoordenada(i, j);
+                this.Tablero[i][j] = new CCoordenada(j, i);
             }
         }
         return this;
@@ -133,7 +150,7 @@ class CJuego {
                 celda.setAttribute('id', i + '-' + j);
                 //Cuando el usuario da click
                 celda.addEventListener('click', (evento) => {
-                    evento.currentTarget.innerText = this.Jugar(celda, i ,j);
+                    evento.currentTarget.innerText = this.Jugar(celda, i, j);
 
                 });
                 fila.appendChild(celda);
@@ -144,12 +161,12 @@ class CJuego {
         return this;
     }
 
-    Jugar(celda,i , j) {
+    Jugar(celda, i, j) {
         if (this.EsCeldaVacia(celda)) {
             if (this.Turno) {
                 this.Turno = true;
-                this.Tablero[i][j]=this.j1.Simbolo;
-                this.IA.jugarIA(this.Tablero[i][j],columnas,filas,this.Tablero);
+                this.Tablero[i][j].Simbolo = this.j1.Simbolo;
+                this.IA.jugarIA(this.Tablero[i][j], this.Columnas, this.Filas, this.Tablero);
                 return this.j1.Simbolo;
             } else {
                 this.Turno = true;
