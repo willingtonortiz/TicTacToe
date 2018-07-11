@@ -81,7 +81,7 @@ class CIA extends CJugador {
 
                     if (choque == true)
                         choque = false;
-                     else {
+                    else {
                         break;
                     }
                 }
@@ -140,8 +140,15 @@ class CJuego {
             let nombreJugador = document.getElementById('NombreJugador');
             this.j1 = new CJugador(nombreJugador, 'X');
             this.maquina = new CIA('Ultron', 'O');
+            this.TurnosRestantes = this.Filas * this.Columnas;
+            this.TerminoTurno = true;
             return this;
         }
+    }
+
+    //Funcion para hacer sleep
+    Sleep(tiempo) {
+        return new Promise((resolve) => setTimeout(resolve, tiempo));
     }
 
     //Obtiene y valida las filas y las columnas de los inputs
@@ -219,13 +226,23 @@ class CJuego {
     }
 
     //Realiza una iteracion en el juego
-    Jugar(celda) {
-        if (this.EsCeldaVacia(celda)) {
+    async Jugar(celda) {
+        if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
             this.ObtenerCoordenada(celda).Simbolo = this.j1.Simbolo;
-
-            //Jugada de la maquina
-            this.maquina.jugarIA(this.ObtenerCoordenada(celda), this.Columnas, this.Filas, this.Tablero);
+            this.TurnosRestantes--;
+            this.ActualizarTablero();
+            this.ContarPuntajes();
+            this.TerminoTurno = false;
+            //Espera un segundo
+            await this.Sleep(1000);
+            this.TerminoTurno = true;
+            //Si ya se completo la tabla, la maquina no jugara (tablas impares)
+            if (this.TurnosRestantes !== 0) {
+                //Jugada de la maquina
+                this.maquina.jugarIA(this.ObtenerCoordenada(celda), this.Columnas, this.Filas, this.Tablero);
+                this.TurnosRestantes--;
+            }
             this.ActualizarTablero();
             this.ContarPuntajes();
         }
