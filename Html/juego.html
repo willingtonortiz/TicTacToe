@@ -27,7 +27,6 @@
                 </h1>
             </div>
             <div class="datos-form">
-
                 <form>
                     <div class="input">
                         <input id="NombreJugador" type="text" placeholder="Nombre del jugador">
@@ -46,15 +45,16 @@
                 </form>
             </div>
         </div>
+
         <div class="container-juego">
             <div class="marcador">
                 <div class="jugadorNormal submarcado">
                     <div class="shapeshifter svg-img" style="background-image: url(../img/sprite_60fpsHB.svg)">
-                    <img class="neon-svg" src="../img/NeonBH.svg" alt="">
+                        <img class="neon-svg" src="../img/NeonBH.svg" alt="">
                     </div>
                 </div>
-                <div class="barra submarcado">
-                    1:1
+                <div id="puntaje" class="barra submarcado">
+                    0:0
                 </div>
                 <div class="jugadorBot submarcado">
                     <div class="shapeshifter svg-img" style="background-image: url(../img/sprite_60fpsAI.svg)">
@@ -67,12 +67,7 @@
 
             </div>
         </div>
-
     </div>
-
-
-
-
 
     <script src="../Scripts/app.js"></script>
     <script src="../Scripts/JuegoEffects.js"></script>
