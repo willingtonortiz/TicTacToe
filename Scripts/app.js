@@ -92,13 +92,13 @@ class CCoordenada {
 
 class CJuego {
     //Contructor
-    constructor(filas = "", columnas = "") {
+    constructor(filas=3, columnas=3) {
         this.Filas = Number(filas);
         this.Columnas = Number(columnas);
         this.Turno = 'j1';
-        this.onlyNumbers=/^([0-9])*$/;
-        this.ObtenerFilasColumnas();
-        if(this.ValidacionNumeros()){       
+        
+      
+        if(this.ObtenerFilasColumnas()){       
         this.InicializarMatriz();
         this.InicializarTabla();
         this.j1 = new CJugador('', 'X');
@@ -107,25 +107,28 @@ class CJuego {
         }
 
     }
-    ValidacionNumeros()
-    {
+    ValidacionNumeros(filas,columnas)
+    {   var onlyNumbers=/^([0-9])*$/;//es una expresion regular
+        //si no es un numero ej Fila=a || Columnas=c
         if(isNaN(this.Filas) && isNaN(this.Columnas) )
         {
             alert("Ingresar Valores Correctamente");
             return false;
         }
-     
+     //En caso filas este vacio
         if(isNaN(this.Filas) && !isNaN(this.Columnas))
         {
             alert("Ingresar Cantidad de Filas");
             return false;
         }
+        //En caso columnas este vacio
         if(!isNaN(this.Filas) && isNaN(this.Columnas) )
         {
             alert("Ingresar Cantidad de Columnas");
             return false;
         }
-        if( !this.onlyNumbers.test(this.filas) ||  !this.onlyNumbers.test(this.columnas) )//si encuentra una letra retorar falso
+        //encaso se ingrese numeros con otro caracter ejempl 1s 2"espacio" "3 m"
+        if( !onlyNumbers.test(filas) ||  !onlyNumbers.test(columnas) )//si encuentra una letra retorar falso
         {       
             alert("Solo ingresar numeros");
             return false;
@@ -138,6 +141,9 @@ class CJuego {
     ObtenerFilasColumnas() {
         this.Filas = parseInt(document.getElementById('filas').value);
         this.Columnas = parseInt(document.getElementById('columnas').value);
+        var filasVerificacion=String(document.getElementById('filas').value);
+        var columnasVerificacion=String(document.getElementById('columnas').value);
+       return this.ValidacionNumeros(filasVerificacion,columnasVerificacion);
     }
 
     //Creación la matriz del juego
@@ -159,6 +165,7 @@ class CJuego {
         contenedor.innerHTML = '';
         let tabla = document.createElement('table');
         for (let i = 0; i < this.Filas; ++i) {
+
             let fila = document.createElement('tr');
             for (let j = 0; j < this.Columnas; ++j) {
                 let celda = document.createElement('td');
@@ -191,7 +198,8 @@ class CJuego {
 
     //Devuelve true si la celda esta vacia
     EsCeldaVacia(celda) {
-        if (celda.innerText === '') return true;
+        if (
+            celda.innerText === '') return true;
         else return false;
     }
 
