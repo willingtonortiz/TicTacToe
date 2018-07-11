@@ -66,8 +66,11 @@ class CIA extends CJugador {
             }
             else {
                 if (Tablero[y + dy][x + dx].Simbolo === this.Simbolo) {
+                    x += dx;
+                    y += dy;
                     dy *= -1;
                     dx *= -1;
+
                     if (choque == true)
                         choque = false;
                     else
@@ -85,8 +88,9 @@ class CIA extends CJugador {
         if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
             if (this.jugada != null) {
                 if (!this.PensarJugada(this.jugada, limitex, limitey, Tablero)) {
-                    this.jugada.Simbolo = '';
-                    this.PensarJugada(this.jugada, limitex, limitey, Tablero);
+                    //this.jugada.Simbolo = '';
+                    let jugadaNueva = new CCoordenada(this.jugada.X, this.jugada.Y);
+                    this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
                 }
             }
             else {
@@ -96,7 +100,7 @@ class CIA extends CJugador {
             }
         }
         else alert("jugada evitada");
-        alert("se jugo en: "+this.jugada.X+" "+this.jugada.Y);
+        alert("se jugo en: " + this.jugada.X + " " + this.jugada.Y);
     }
 }
 class CCoordenada {
