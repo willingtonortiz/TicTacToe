@@ -291,7 +291,6 @@ class CJuego {
 
     //Funcion que cuenta los puntajes de los jugadores
     ContarPuntajes() {
-        console.clear();
         let puntaje1 = 0,
             contador1 = 0;
         let puntaje2 = 0,
