@@ -7,20 +7,70 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="../Estilos/estilos.css">
+    <link rel="stylesheet" href="../Estilos/sprite_60fpsAI.css">
 </head>
 
 <body>
-    <form>
-        <input id="filas" type="text" placeholder="Filas">
-        <input id="columnas" type="text" placeholder="Columnas">
-        <input id="botonJugar" type="button" value="Jugar">
-    </form>
+    <div class="container">
 
-    <div id="contenedor">
+        <div class="container-datos">
+            <div class="icon-header">
+                <img id="brain" src="../img/brain human.svg" alt="">
+                <img src="../img/tic-tac-toe.svg" alt="">
+                <img src="../img/AI.svg" alt="">
+            </div>
+            <div class="title">
+                <h1>
+                    <span id="tic">TIC</span>
+                    <span id="tac">TAC</span>
+                    <span id="toe">TOE</span>
+                </h1>
+            </div>
+            <div class="datos-form">
+                <form>
+                    <div class="input">
+                        <input id="NombreJugador" type="text" placeholder="Nombre del jugador">
+                    </div>
+                    <div class="input">
+                        <input id="filas" type="text" placeholder="Filas">
+                    </div>
+                    <div class="input">
+                        <input id="columnas" type="text" placeholder="Columnas">
 
+                    </div>
+                    <div class="input">
+                        <input id="botonJugar" type="button" value="Jugar">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="container-juego">
+            <div class="marcador">
+                <div class="jugadorNormal submarcado">
+                    <div class="shapeshifter svg-img" style="background-image: url(../img/sprite_60fpsHB.svg)">
+                        <img class="neon-svg" src="../img/NeonBH.svg" alt="">
+                    </div>
+                </div>
+                <div id="puntaje" class="barra submarcado">
+                    0:0
+                </div>
+                <div class="jugadorBot submarcado">
+                    <div class="shapeshifter svg-img" style="background-image: url(../img/sprite_60fpsAI.svg)">
+                        <img class="neon-svg" src="../img/NeonAI.svg" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div id="contenedor">
+
+            </div>
+        </div>
     </div>
 
     <script src="../Scripts/app.js"></script>
+    <script src="../Scripts/JuegoEffects.js"></script>
 </body>
 
 </html>
