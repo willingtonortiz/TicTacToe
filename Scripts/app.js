@@ -305,12 +305,11 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
-                }
-                else{
+                } else {
                     contador1 = contador2 = 0;
                 }
-                if (contador1 >= 3){ puntaje1++; console.log('Horizontal ' + puntaje1);}
-                if (contador2 >= 3){ puntaje2++; console.log('Horizontal ' + puntaje2);}
+                if (contador1 >= 3) puntaje1++;
+                if (contador2 >= 3) puntaje2++;
             }
             contador1 = contador2 = 0;
         }
@@ -324,12 +323,11 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
-                }
-                else{
+                } else {
                     contador1 = contador2 = 0;
                 }
-                if (contador1 >= 3) { puntaje1++; console.log('Vertical ' + puntaje1);}
-                if (contador2 >= 3) { puntaje2++; console.log('Vertical ' + puntaje2);}
+                if (contador1 >= 3) puntaje1++;
+                if (contador2 >= 3) puntaje2++;
             }
             contador1 = contador2 = 0;
         }
@@ -349,12 +347,11 @@ class CJuego {
                     } else if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
-                    }
-                    else{
+                    } else {
                         contador1 = contador2 = 0;
                     }
-                    if (contador1 >= 3) { puntaje1++; console.log('Diagonal1 ' + puntaje1);}
-                    if (contador2 >= 3) { puntaje2++; console.log('Diagonal1 ' + puntaje2);}
+                    if (contador1 >= 3) puntaje1++;
+                    if (contador2 >= 3) puntaje2++;
                 }
             }
             if (inicio1 !== 0) inicio1--;
@@ -373,12 +370,11 @@ class CJuego {
                     } else if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
-                    }
-                    else{
+                    } else {
                         contador1 = contador2 = 0;
                     }
-                    if (contador1 >= 3) { puntaje1++; console.log('Diagonal2 ' + puntaje1);}  
-                    if (contador2 >= 3) { puntaje2++; console.log('Diagonal2 ' + puntaje2);}  
+                    if (contador1 >= 3) puntaje1++;
+                    if (contador2 >= 3) puntaje2++;
                 }
             }
             if (inicio1 !== this.Filas - 1) inicio1++;
@@ -399,19 +395,19 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     let juego = new CJuego();
     var _tr = document.getElementsByTagName('tr');
     var _td = document.getElementsByTagName('td');
-    if(_tr.length > 3 && _tr.length< 100){
-        for(var i  = 0 ; i<_td.length; i++){
-            _td[i].style.height="50px";
-            _td[i].style.width="50px";
-            _td[i].style.fontSize ="36px";
+    if (_tr.length > 3 && _tr.length < 100) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "50px";
+            _td[i].style.width = "50px";
+            _td[i].style.fontSize = "36px";
         }
     }
-    if(_tr.length > 9 && _tr.length< 16){
-        for(var i  = 0 ; i<_td.length; i++){
-            _td[i].style.height="30px";
-            _td[i].style.width="30px";
-            _td[i].style.fontSize ="18px";
+    if (_tr.length > 9 && _tr.length < 16) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "30px";
+            _td[i].style.width = "30px";
+            _td[i].style.fontSize = "18px";
         }
     }
-    
+
 });
