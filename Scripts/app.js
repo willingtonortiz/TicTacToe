@@ -71,6 +71,7 @@ class CIA extends CJugador {
             if (Tablero[y + dy][x + dx].Simbolo == '') {
                 Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
                 this.Jugada = Tablero[y + dy][x + dx];
+                document.getElementById(Tablero[y + dy][x + dx].Y + '-' + Tablero[y + dy][x + dx].X).classList.add('ColorAzul');
                 seguir = false;
             } else {
                 if (Tablero[y + dy][x + dx].Simbolo === this.Simbolo) {
@@ -119,6 +120,7 @@ class CIA extends CJugador {
         } while (Tablero[y][x].Simbolo !== '');
         Tablero[y][x].Simbolo = this.Simbolo;
         this.Jugada = Tablero[y][x];
+        document.getElementById(Tablero[y][x].Y + '-' + Tablero[y][x].X).classList.add('ColorAzul');
     }
 }
 
@@ -229,18 +231,21 @@ class CJuego {
     async Jugar(celda) {
         if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
-            this.ObtenerCoordenada(celda).Simbolo = this.j1.Simbolo;
+            celda.classList.add('ColorRojo');
+            let coordenada = this.ObtenerCoordenada(celda);
+            coordenada.Simbolo = this.j1.Simbolo;
             this.TurnosRestantes--;
             this.ActualizarTablero();
             this.ContarPuntajes();
             this.TerminoTurno = false;
             //Espera un segundo
-            await this.Sleep(1000);
+            let tiempo = Math.round(Math.random() * 1000 + 500);
+            await this.Sleep(tiempo);
             this.TerminoTurno = true;
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.TurnosRestantes !== 0) {
                 //Jugada de la maquina
-                this.maquina.jugarIA(this.ObtenerCoordenada(celda), this.Columnas, this.Filas, this.Tablero);
+                this.maquina.jugarIA(coordenada, this.Columnas, this.Filas, this.Tablero);
                 this.TurnosRestantes--;
             }
             this.ActualizarTablero();
@@ -263,6 +268,10 @@ class CJuego {
         return this.Tablero[fila][columna];
     }
 
+    ObtenerCelda(coordenada) {
+        return document.getElementById(coordenada.Y + '-' + coordenada.X);
+    }
+
     //Devuelve true si la celda esta vacia
     EsCeldaVacia(celda) {
         return celda.innerText === ''
@@ -282,6 +291,7 @@ class CJuego {
 
     //Funcion que cuenta los puntajes de los jugadores
     ContarPuntajes() {
+        console.clear();
         let puntaje1 = 0,
             contador1 = 0;
         let puntaje2 = 0,
@@ -296,8 +306,11 @@ class CJuego {
                     contador2++;
                     contador1 = 0;
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                else{
+                    contador1 = contador2 = 0;
+                }
+                if (contador1 >= 3){ puntaje1++; console.log('Horizontal ' + puntaje1);}
+                if (contador2 >= 3){ puntaje2++; console.log('Horizontal ' + puntaje2);}
             }
             contador1 = contador2 = 0;
         }
@@ -312,8 +325,11 @@ class CJuego {
                     contador2++;
                     contador1 = 0;
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                else{
+                    contador1 = contador2 = 0;
+                }
+                if (contador1 >= 3) { puntaje1++; console.log('Vertical ' + puntaje1);}
+                if (contador2 >= 3) { puntaje2++; console.log('Vertical ' + puntaje2);}
             }
             contador1 = contador2 = 0;
         }
@@ -334,8 +350,11 @@ class CJuego {
                         contador2++;
                         contador1 = 0;
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    else{
+                        contador1 = contador2 = 0;
+                    }
+                    if (contador1 >= 3) { puntaje1++; console.log('Diagonal1 ' + puntaje1);}
+                    if (contador2 >= 3) { puntaje2++; console.log('Diagonal1 ' + puntaje2);}
                 }
             }
             if (inicio1 !== 0) inicio1--;
@@ -355,8 +374,11 @@ class CJuego {
                         contador2++;
                         contador1 = 0;
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    else{
+                        contador1 = contador2 = 0;
+                    }
+                    if (contador1 >= 3) { puntaje1++; console.log('Diagonal2 ' + puntaje1);}  
+                    if (contador2 >= 3) { puntaje2++; console.log('Diagonal2 ' + puntaje2);}  
                 }
             }
             if (inicio1 !== this.Filas - 1) inicio1++;

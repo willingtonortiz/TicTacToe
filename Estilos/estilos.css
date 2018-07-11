@@ -205,3 +205,11 @@ tr,
 td {
     border: 1px solid #aaa;
 }
+
+.ColorRojo{
+    color: red;
+}
+
+.ColorAzul{
+    color: blue;
+}
