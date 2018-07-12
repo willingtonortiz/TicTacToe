@@ -95,11 +95,11 @@ class CIA extends CJugador {
     //Funcion void
     jugarIA(jugada, limitex, limitey, Tablero) {
         if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
-            if (this.jugada != null) {
-                if (!this.PensarJugada(this.jugada, limitex, limitey, Tablero)) {
-                    //this.jugada.Simbolo = '';
-                    let jugadaNueva = new CCoordenada(this.jugada.X, this.jugada.Y);
-                    this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
+            if (this.Jugada != null) {
+                if (!this.PensarJugada(this.Jugada, limitex, limitey, Tablero)) {
+                    this.JugadaRandom(Tablero);
+                   // let jugadaNueva = new CCoordenada(this.jugada.X, this.jugada.Y);
+                   // this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
                 }
             } else {
                 this.JugadaRandom(Tablero);
