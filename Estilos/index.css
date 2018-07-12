@@ -950,8 +950,8 @@ screen and (max-height:1024px) {
 
 /* =========== PHONE ===========  */
 
-@media screen and (device-width:480px),
-screen and (device-height:800px) {
+@media screen and (max-width:480px),
+screen and (max-height:800px) {
     .container {
         justify-content: space-around !important;
     }
@@ -1002,8 +1002,8 @@ screen and (device-height:800px) {
     }
 }
 
-@media screen and (device-width:360px),
-screen and (device-height:640px) {
+@media screen and (max-width:360px),
+screen and (max-height:640px) {
     .container {
         justify-content: space-around !important;
     }

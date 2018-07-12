@@ -391,10 +391,25 @@ class CJuego {
 }
 
 document.getElementById('botonJugar').addEventListener('click', () => {
+
+    
+    
     let juego = new CJuego();
     var _tr = document.getElementsByTagName('tr');
     var _td = document.getElementsByTagName('td');
-    if (_tr.length > 3 && _tr.length < 100) {
+    var _svgAnimation = document.getElementsByClassName('svg-img');
+    var _svgNeon = document.getElementsByClassName('neon-svg');
+    var _reload = document.getElementsByClassName('reload')[0];
+    var _containerDatos = document.getElementsByClassName('container-datos')[0];
+    _containerDatos.classList.add('container-moveup');
+    _svgAnimation[0].setAttribute("class", "shapeshifter svg-img play");
+    _svgAnimation[1].setAttribute("class", "shapeshifter svg-img play");
+
+    for( var  q = 0 ;  q< _svgNeon.length;q++){
+        _svgNeon[q].classList.add('neonAnimate');
+    }
+
+    if (_tr.length > 2 && _tr.length < 100) {
         for (var i = 0; i < _td.length; i++) {
             _td[i].style.height = "50px";
             _td[i].style.width = "50px";
@@ -408,5 +423,14 @@ document.getElementById('botonJugar').addEventListener('click', () => {
             _td[i].style.fontSize = "18px";
         }
     }
+
+    _reload.classList.add('reload-animation');
     
+    // FUNCION DEL RESET DEL JUEGO
+    _reload.addEventListener('click',f =>{
+        _reload.classList.remove('reload-animation');
+        _containerDatos.classList.remove('container-moveup');
+
+    })
+
 });
