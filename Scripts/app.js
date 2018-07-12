@@ -7,7 +7,12 @@ class CJugador {
         this.Jugada = null;
     }
 }
-
+class Par{
+    constructor(valor1,valor2){
+        this.first=valor1;
+        this.second=valor2;
+    }
+}
 class CIA extends CJugador {
     //Funcion booleana
     PensarJugada(jugada, limitex, limitey, Tablero) {
@@ -56,9 +61,10 @@ class CIA extends CJugador {
         if ((x - jugada.X == 2 || x - jugada.X == -2) && (y - jugada.Y == 1 || y - jugada.Y == -1)) {
             return false;
         }
-        let seguir = true;
+        let valor=2;
         let choque = true;
-        while (seguir) {
+        let prioridad=0;
+        while (true) {
             if (y + dy < 0 || y + dy >= limitey || x + dx < 0 || x + dx >= limitex) {
                 dy *= -1;
                 dx *= -1;
@@ -69,9 +75,14 @@ class CIA extends CJugador {
                 }
             }
             if (Tablero[y + dy][x + dx].Simbolo == '') {
-                Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
-                this.Jugada = Tablero[y + dy][x + dx];
-                seguir = false;
+                let posiblejugada = new CCoordenada(x+dx,y+dy);
+                posiblejugada.Simbolo=this.Simbolo;
+                //Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
+                //this.Jugada = Tablero[y + dy][x + dx];
+                if(choque==true)
+
+                if(choque==false)
+                this.posiblesJugadas.push();
             } else {
                 if (Tablero[y + dy][x + dx].Simbolo === this.Simbolo) {
                     x += dx;
@@ -80,21 +91,22 @@ class CIA extends CJugador {
                     dx *= -1;
 
                     if (choque == true)
-                        choque = false;
+                        choque = false; 
                     else {
                         break;
                     }
                 }
             }
+            if(choque==false)
+            prioridad++;
             x += dx;
             y += dy;
         }
-        return !seguir;
     }
 
     //Funcion void
     jugarIA(jugada, limitex, limitey, Tablero) {
-        if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
+       /* if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
             if (this.jugada != null) {
                 if (!this.PensarJugada(this.jugada, limitex, limitey, Tablero)) {
                     //this.jugada.Simbolo = '';
@@ -103,12 +115,10 @@ class CIA extends CJugador {
                 }
             } else {
                 this.JugadaRandom(Tablero);
-                //alert("primer turno");
             }
-        } else {
-            //alert("jugada evitada");
-        }
-        //alert("se jugo en: " + this.Jugada.X + " " + this.Jugada.Y);
+        } */
+        let posiblesJugadas = new Array;
+        
     }
 
     JugadaRandom(Tablero) {
