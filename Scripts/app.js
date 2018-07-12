@@ -408,5 +408,5 @@ document.getElementById('botonJugar').addEventListener('click', () => {
             _td[i].style.fontSize = "18px";
         }
     }
-
+    
 });
