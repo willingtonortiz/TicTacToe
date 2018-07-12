@@ -931,13 +931,13 @@
         font-size: 48px !important;
     }
     .Desarolladores .Desarrolladores-container p {
-        font-size: 24px !important;
+        font-size: 20px !important;
     }
     .Instrucciones .instrucciones-container p {
-        font-size: 24px !important;
+        font-size: 20px !important;
     }
     .Agradecimientos .Agradecimientos-container p {
-        font-size: 24px !important;
+        font-size: 20px !important;
     }
 }
 
@@ -991,7 +991,12 @@
         font-size: 20px !important;
     }
     .Agradecimientos .Agradecimientos-container p {
-        font-size: 20px !important;
+        width: 300px;
+        font-size: 16px !important;
+        word-wrap: break-word;
+    }
+    .close{
+        font-size: 32px;
     }
 }
 
@@ -1044,8 +1049,11 @@
     .Agradecimientos .Agradecimientos-container p {
         width: 300px;
         padding: 10px;
-        font-size: 16px !important;
+        font-size: 14px !important;
         word-wrap: break-word;
 
+    }
+    .close{
+        font-size: 32px;
     }
 }

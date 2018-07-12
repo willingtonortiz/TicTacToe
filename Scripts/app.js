@@ -430,7 +430,11 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     _reload.addEventListener('click',f =>{
         _reload.classList.remove('reload-animation');
         _containerDatos.classList.remove('container-moveup');
-
+        _svgAnimation[0].setAttribute("class", "shapeshifter svg-img");
+        _svgAnimation[1].setAttribute("class", "shapeshifter svg-img");
+        for( var  q = 0 ;  q< _svgNeon.length;q++){
+            _svgNeon[q].classList.remove('neonAnimate');
+        }
     })
-
+    document.getElementById('puntaje').innerText = '0 - 0';
 });

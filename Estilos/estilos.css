@@ -80,18 +80,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
 }
 
 .container .container-datos .datos-form .input {
-  margin: 20px 0;
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .container .container-datos .datos-form .input input {
-  padding: 10px 30px;
+  padding: 10px 25px;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.02);
 }
@@ -101,9 +101,9 @@
 }
 
 #NombreJugador {
-  border-radius: 0%;
-  border: none;
-  border-bottom: 1px solid #eee;
+  
+  
+  border: 1px solid #eee;
   color: #eee;
   text-align: center;
   width: 300px;
@@ -111,33 +111,30 @@
 
   background: transparent;
   font-size: 22px;
-  text-shadow: 0 0 5px #eee;
   letter-spacing: 5px;
   
 }
 
 #filas {
-  border: none;
-  border-bottom: 1px solid #21c1a9;
+  
+  border: 1px solid #21c1a9;
   color: #21c1a9;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  border-radius: 0%;
-  text-shadow: 0 0 5px #21c1a9;
+  
 }
 
 #columnas {
-  border: none;
-  border-bottom: 1px solid #aa21c1;
+  
+  border: 1px solid #aa21c1;
   color: #aa21c1;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  border-radius: 0%;
-  text-shadow: 0 0 5px #aa21c1;
+  
 }
 
 #botonJugar {
@@ -297,19 +294,19 @@ td {
   }
   .container .container-datos .datos-form {
     height: 50vh !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 32px !important;
+    width: 300px !important;
+    font-size: 22px !important;
   }
   #filas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
   .marcador .submarcado {
     margin: 0 40px;
@@ -331,16 +328,16 @@ td {
     justify-content: center !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 32px !important;
+    width: 300px !important;
+    font-size: 22px !important;
   }
   #filas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
 }
 
@@ -357,14 +354,16 @@ td {
     justify-content: center !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 32px !important;
+    width: 300px !important;
+    font-size: 22px !important;
   }
   #filas {
-    font-size: 32px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 32px !important;
+    font-size: 16px !important;
+    width: 150px !important;
   }
 }
 @media screen and (max-width: 1366px) {
@@ -381,16 +380,16 @@ td {
     max-width: 120px !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 32px !important;
+    width: 300px !important;
+    font-size: 14px !important;
   }
   #filas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 32px !important;
-    width: 300px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
 }
 
@@ -407,16 +406,16 @@ td {
     justify-content: center !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 24px !important;
+    width: 300px !important;
+    font-size: 14px !important;
   }
   #filas {
-    font-size: 24px !important;
-    width: 200px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 24px !important;
-    width: 200px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
 }
 
@@ -435,14 +434,16 @@ td {
     justify-content: center !important;
   }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 24px !important;
+    width: 300px !important;
+    font-size: 14px !important;
   }
   #filas {
-    font-size: 24px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 24px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   .reload {
     font-size: 32px;
@@ -463,17 +464,22 @@ td {
     height: 50vh !important;
     justify-content: center !important;
   }
+  .container .container-datos .datos-form .input{
+    margin: 15px 0 !important;
+  }
   #NombreJugador {
-    width: 600px !important;
-    font-size: 24px !important;
+    width: 300px !important;
+    font-size: 18px !important;
   }
   #filas {
-    font-size: 24px !important;
+    width: 150px !important;
+    font-size: 14px !important;
     margin: 0 auto !important;
   }
   #columnas {
-    font-size: 24px !important;
+    font-size: 14px !important;
     margin: 0 auto !important;
+    width: 150px !important;
   }
 }
 
@@ -523,25 +529,25 @@ td {
   }
   .container .container-datos .datos-form {
     height: 50vh !important;
-    justify-content: center !important;
+    justify-content: flex-end !important;
   }
   .container .container-datos .title {
     width: 100% !important;
     font-size: 32px !important;
   }
   #NombreJugador {
-    width: 350px !important;
+    width: 300px !important;
     margin: 0 auto;
-    font-size: 24px !important;
+    font-size: 16px !important;
     letter-spacing: 3px !important;
   }
   #filas {
-    font-size: 22px !important;
-    width: 200px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   #columnas {
-    font-size: 22px !important;
-    width: 200px !important;
+    font-size: 12px !important;
+    width: 150px !important;
   }
   .submarcado {
     width: 100%;
@@ -574,6 +580,10 @@ td {
   .container .container-datos .datos-form {
     height: 60vh !important;
     justify-content: center !important;
+    flex-flow: column nowrap;
+  }
+  .container .container-datos .datos-form .input{
+    margin: 10px auto !important;
   }
   .container .container-datos .title {
     width: 100% !important;
@@ -581,17 +591,17 @@ td {
     height: 15vh !important;
   }
   #NombreJugador {
-    width: 240px !important;
+    width: 180px !important;
     margin: 0 auto;
-    font-size: 18px !important;
+    font-size: 12px !important;
     letter-spacing: 3px !important;
   }
   #filas {
-    font-size: 18px !important;
+    font-size: 12px !important;
     width: 150px !important;
   }
   #columnas {
-    font-size: 18px !important;
+    font-size: 12px !important;
     width: 150px !important;
   }
 
