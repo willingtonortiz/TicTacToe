@@ -113,6 +113,7 @@
   font-size: 22px;
   text-shadow: 0 0 5px #eee;
   letter-spacing: 5px;
+  
 }
 
 #filas {
@@ -427,7 +428,7 @@ td {
   }
 
   .icon-header img {
-    max-width: 120px !important;
+    max-width: 140px !important;
   }
   .container .container-datos .datos-form {
     height: 50vh !important;
@@ -435,13 +436,13 @@ td {
   }
   #NombreJugador {
     width: 600px !important;
-    font-size: 28px !important;
+    font-size: 24px !important;
   }
   #filas {
-    font-size: 28px !important;
+    font-size: 24px !important;
   }
   #columnas {
-    font-size: 28px !important;
+    font-size: 24px !important;
   }
   .reload {
     font-size: 32px;
@@ -456,7 +457,7 @@ td {
   }
 
   .icon-header img {
-    max-width: 200px !important;
+    max-width: 140px !important;
   }
   .container .container-datos .datos-form {
     height: 50vh !important;
@@ -464,14 +465,14 @@ td {
   }
   #NombreJugador {
     width: 600px !important;
-    font-size: 32px !important;
+    font-size: 24px !important;
   }
   #filas {
-    font-size: 32px !important;
+    font-size: 24px !important;
     margin: 0 auto !important;
   }
   #columnas {
-    font-size: 32px !important;
+    font-size: 24px !important;
     margin: 0 auto !important;
   }
 }
@@ -482,7 +483,7 @@ td {
   }
 
   .icon-header img {
-    max-width: 200px !important;
+    max-width: 140px !important;
   }
   .container .container-datos .datos-form {
     height: 50vh !important;
@@ -517,7 +518,7 @@ td {
     width: 95% !important;
   }
   .icon-header img {
-    max-width: 150px !important;
+    max-width: 100px !important;
     margin: 0 20px !important;
   }
   .container .container-datos .datos-form {
@@ -567,7 +568,7 @@ td {
     width: 95% !important;
   }
   .icon-header img {
-    max-width: 200px !important;
+    max-width: 70px !important;
     margin: 0 20px !important;
   }
   .container .container-datos .datos-form {
