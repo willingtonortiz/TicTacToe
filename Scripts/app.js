@@ -18,12 +18,10 @@ class CIA extends CJugador {
     PensarJugada(jugada, limitex, limitey, Tablero) {
         for (let y = jugada.Y - 2; y <= jugada.Y + 2; y++) {
             for (let x = jugada.X - 2; x <= jugada.X + 2; x++) {
-                if (y < 0 || y >= limitey) {
+                if (y < 0 || y >= limitey) 
                     break;
-                }
-                if (x < 0 || x >= limitex) {
+                if (x < 0 || x >= limitex) 
                     continue;
-                }
                 if (Tablero[y][x].Simbolo == jugada.Simbolo && Tablero[y][x] != jugada) {
                     if (this.EvaluarJugada(x, y, jugada, Tablero, limitex, limitey)) {
                         return true;
@@ -36,34 +34,28 @@ class CIA extends CJugador {
 
     //Funcion booleana
     EvaluarJugada(x, y, jugada, Tablero, limitex, limitey) {
+        if ((y - jugada.Y == 2 || y - jugada.Y == -2) && (x - jugada.X == 1 || x - jugada.X == -1)) 
+            return false;
+        if ((x - jugada.X == 2 || x - jugada.X == -2) && (y - jugada.Y == 1 || y - jugada.Y == -1)) 
+            return false;
         let dy, dx;
-        if (y > jugada.Y) {
+        if (y > jugada.Y) 
             dy = -1;
-        } else {
-            if (y == jugada.Y) {
+        else {
+            if (y == jugada.Y) 
                 dy = 0;
-            } else {
+            else 
                 dy = +1;
-            }
         }
-        if (x > jugada.X) {
+        if (x > jugada.X) 
             dx = -1;
-        } else {
-            if (x == jugada.X) {
+        else {
+            if (x == jugada.X) 
                 dx = 0;
-            } else {
+            else 
                 dx = +1;
-            }
         }
-        if ((y - jugada.Y == 2 || y - jugada.Y == -2) && (x - jugada.X == 1 || x - jugada.X == -1)) {
-            return false;
-        }
-        if ((x - jugada.X == 2 || x - jugada.X == -2) && (y - jugada.Y == 1 || y - jugada.Y == -1)) {
-            return false;
-        }
-        let valor=2;
         let choque = true;
-        let prioridad=0;
         while (true) {
             if (y + dy < 0 || y + dy >= limitey || x + dx < 0 || x + dx >= limitex) {
                 dy *= -1;
@@ -97,8 +89,6 @@ class CIA extends CJugador {
                     }
                 }
             }
-            if(choque==false)
-            prioridad++;
             x += dx;
             y += dy;
         }
