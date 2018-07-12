@@ -535,6 +535,7 @@
     font-size: 20px;
 }
 
+
 .Agradecimientos .Agradecimientos-container h1 {
     font-family: mySpace;
     text-align: center;
@@ -548,14 +549,15 @@
     font-family: 'Quicksand', sans-serif;
     text-align: center;
     color: #eee;
-    margin: 10px 0;
+    margin: 10px auto;
     font-size: 20px;
+    position: relative;
+    width: 100%;
 }
 
 /* =========== BIG DESKTOP ===========  */
 
-@media screen and (max-width:1920px),
-screen and (max-height:1080px) {
+@media screen and (max-width:1920px) {
     .icon-header img {
         max-width: 180px;
     }
@@ -606,8 +608,7 @@ screen and (max-height:1080px) {
 
 /* =========== lAPTOPS ===========  */
 
-@media screen and (max-width:1600px),
-screen and (max-height:900px) {
+@media screen and (max-width:1600px) {
     .icon-header img {
         max-width: 160px !important;
     }
@@ -656,8 +657,7 @@ screen and (max-height:900px) {
     }
 }
 
-@media screen and (max-width:1440px),
-screen and (max-height:900px) {
+@media screen and (max-width:1440px) {
     .icon-header img {
         max-width: 160px !important;
     }
@@ -705,9 +705,55 @@ screen and (max-height:900px) {
         justify-content: space-between !important;
     }
 }
-
-@media screen and (max-width:1280px),
-screen and (max-height:800px) {
+@media screen and (max-width:1366px) {
+    .icon-header img {
+        max-width: 120px !important;
+    }
+    .menu ul li {
+        font-size: 24px !important;
+    }
+    .container .title {
+        font-size: 36px !important;
+    }
+    .copyright {
+        font-size: 24px !important;
+    }
+    .Desarolladores .Desarrolladores-container h1 {
+        font-size: 48px !important;
+    }
+    .Instrucciones .instrucciones-container h1 {
+        font-size: 48px !important;
+    }
+    .Agradecimientos .Agradecimientos-container h1 {
+        font-size: 48px !important;
+    }
+    .Desarolladores .Desarrolladores-container p {
+        font-size: 24px !important;
+    }
+    .Instrucciones .instrucciones-container p {
+        font-size: 24px !important;
+    }
+    .Agradecimientos .Agradecimientos-container p {
+        font-size: 24px !important;
+    }
+    .icon-header {
+        width: 75% !important;
+        height: 25vh !important;
+    }
+    .container .title {
+        height: 25vh !important;
+    }
+    .menu {
+        height: 25vh !important;
+    }
+    .copyright {
+        height: 25vh !important;
+    }
+    .container {
+        justify-content: space-around !important;
+    }
+}
+@media screen and (max-width:1280px) {
     .icon-header img {
         max-width: 140px !important;
     }
@@ -756,58 +802,9 @@ screen and (max-height:800px) {
     }
 }
 
-@media screen and (max-width:1366px),
-screen and (max-height:768px) {
-    .icon-header img {
-        max-width: 120px !important;
-    }
-    .menu ul li {
-        font-size: 24px !important;
-    }
-    .container .title {
-        font-size: 36px !important;
-    }
-    .copyright {
-        font-size: 24px !important;
-    }
-    .Desarolladores .Desarrolladores-container h1 {
-        font-size: 48px !important;
-    }
-    .Instrucciones .instrucciones-container h1 {
-        font-size: 48px !important;
-    }
-    .Agradecimientos .Agradecimientos-container h1 {
-        font-size: 48px !important;
-    }
-    .Desarolladores .Desarrolladores-container p {
-        font-size: 24px !important;
-    }
-    .Instrucciones .instrucciones-container p {
-        font-size: 24px !important;
-    }
-    .Agradecimientos .Agradecimientos-container p {
-        font-size: 24px !important;
-    }
-    .icon-header {
-        width: 75% !important;
-        height: 25vh !important;
-    }
-    .container .title {
-        height: 25vh !important;
-    }
-    .menu {
-        height: 25vh !important;
-    }
-    .copyright {
-        height: 25vh !important;
-    }
-    .container {
-        justify-content: space-around !important;
-    }
-}
 
-@media screen and (max-width:1280px),
-screen and (max-height:1024px) {
+
+@media screen and (max-width:1280px) {
     .container {
         justify-content: center !important;
     }
@@ -839,8 +836,7 @@ screen and (max-height:1024px) {
 
 /* =========== LANDSCAPE ===========  */
 
-@media screen and (max-width:1024px),
-screen and (max-height:768px) {
+@media screen and (max-width:1024px) {
     .container {
         justify-content: space-around !important;
     }
@@ -871,9 +867,44 @@ screen and (max-height:768px) {
 }
 
 /* =========== TABLET PORTRAIT ===========  */
+@media screen and (max-width:768px) {
+    .icon-header img {
+        max-width: 140px !important;
+    }
+    .icon-header {
+        width: 85% !important;
+        height: 25vh !important;
+    }
+    .container .title {
+        height: 15vh !important;
+    }
+    .menu {
+        height: 25vh !important;
+    }
+    .copyright {
+        height: 20vh !important;
+    }
+    .Desarolladores .Desarrolladores-container h1 {
+        font-size: 48px !important;
+    }
+    .Instrucciones .instrucciones-container h1 {
+        font-size: 48px !important;
+    }
+    .Agradecimientos .Agradecimientos-container h1 {
+        font-size: 48px !important;
+    }
+    .Desarolladores .Desarrolladores-container p {
+        font-size: 24px !important;
+    }
+    .Instrucciones .instrucciones-container p {
+        font-size: 24px !important;
+    }
+    .Agradecimientos .Agradecimientos-container p {
+        font-size: 24px !important;
+    }
+}
 
-@media screen and (max-width:720px),
-screen and (max-height:1280px) {
+@media screen and (max-width:720px) {
     .icon-header img {
         max-width: 140px !important;
     }
@@ -910,48 +941,10 @@ screen and (max-height:1280px) {
     }
 }
 
-@media screen and (max-width:768px),
-screen and (max-height:1024px) {
-    .icon-header img {
-        max-width: 140px !important;
-    }
-    .icon-header {
-        width: 85% !important;
-        height: 25vh !important;
-    }
-    .container .title {
-        height: 15vh !important;
-    }
-    .menu {
-        height: 25vh !important;
-    }
-    .copyright {
-        height: 20vh !important;
-    }
-    .Desarolladores .Desarrolladores-container h1 {
-        font-size: 48px !important;
-    }
-    .Instrucciones .instrucciones-container h1 {
-        font-size: 48px !important;
-    }
-    .Agradecimientos .Agradecimientos-container h1 {
-        font-size: 48px !important;
-    }
-    .Desarolladores .Desarrolladores-container p {
-        font-size: 24px !important;
-    }
-    .Instrucciones .instrucciones-container p {
-        font-size: 24px !important;
-    }
-    .Agradecimientos .Agradecimientos-container p {
-        font-size: 24px !important;
-    }
-}
 
 /* =========== PHONE ===========  */
 
-@media screen and (max-width:480px),
-screen and (max-height:800px) {
+@media screen and (max-width:480px) {
     .container {
         justify-content: space-around !important;
     }
@@ -1002,13 +995,12 @@ screen and (max-height:800px) {
     }
 }
 
-@media screen and (max-width:360px),
-screen and (max-height:640px) {
+@media screen and (max-width:360px){
     .container {
         justify-content: space-around !important;
     }
     .icon-header img {
-        max-width: 140px !important;
+        max-width: 70px !important;
         margin: 0 20px;
     }
     .icon-header {
@@ -1033,6 +1025,7 @@ screen and (max-height:640px) {
         font-size: 20px !important;
     }
 
+
     .Desarolladores .Desarrolladores-container h1 {
         font-size: 32px !important;
     }
@@ -1040,7 +1033,7 @@ screen and (max-height:640px) {
         font-size: 32px !important;
     }
     .Agradecimientos .Agradecimientos-container h1 {
-        font-size: 32px !important;
+        font-size: 24px !important;
     }
     .Desarolladores .Desarrolladores-container p {
         font-size: 16px !important;
@@ -1049,6 +1042,10 @@ screen and (max-height:640px) {
         font-size: 16px !important;
     }
     .Agradecimientos .Agradecimientos-container p {
+        width: 300px;
+        padding: 10px;
         font-size: 16px !important;
+        word-wrap: break-word;
+
     }
 }
