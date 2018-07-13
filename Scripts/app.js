@@ -69,6 +69,9 @@ class CIA extends CJugador {
                 }
             }
             if (Tablero[y + dy][x + dx].Simbolo == '') {
+                console.log('Turno de bot');
+                document.getElementsByClassName('neon-svg')[0].classList.add('turnoHumano');
+                document.getElementsByClassName('neon-svg')[1].classList.remove('turnoAI');
                 Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
                 this.Jugada = Tablero[y + dy][x + dx];
                 document.getElementById(Tablero[y + dy][x + dx].Y + '-' + Tablero[y + dy][x + dx].X).classList.add('ColorAzul');
@@ -232,6 +235,9 @@ class CJuego {
         if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
             celda.classList.add('ColorRojo');
+            console.log('Turno humano');
+            document.getElementsByClassName('neon-svg')[1].classList.add('turnoAI');
+            document.getElementsByClassName('neon-svg')[0].classList.remove('turnoHumano');
             let coordenada = this.ObtenerCoordenada(celda);
             coordenada.Simbolo = this.j1.Simbolo;
             this.TurnosRestantes--;
@@ -474,9 +480,9 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     }
     if (_tr.length > 9 && _tr.length < 16) {
         for (var i = 0; i < _td.length; i++) {
-            _td[i].style.height = "30px";
-            _td[i].style.width = "30px";
-            _td[i].style.fontSize = "18px";
+            _td[i].style.height = "40px";
+            _td[i].style.width = "40px";
+            _td[i].style.fontSize = "25px";
         }
     }
 

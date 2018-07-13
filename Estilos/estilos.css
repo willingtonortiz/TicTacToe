@@ -234,20 +234,67 @@ td {
   border: 1px solid #aaa;
 }
 
+.turnoHumano{
+  transition: all .2s ease-in-out;
+  transition-delay: .5s;
+  opacity: 1;
+}
+.turnoAI{
+  opacity: 1;
+  transition: all .2s ease-in-out;
+  transition-delay: .1s;
+}
+
 .ColorRojo, .ColorRojoMarcado {
-  color: #ff1c3e;
+  color: rgba(255, 217, 0, 0.70);
 }
 
 .ColorRojoMarcado{
-  text-shadow: 0 0 10px white;
+  color: rgb(255, 217, 0);
+  text-shadow: 0 0 10px rgb(255, 217, 0);
+  animation: rayasTresNaranja .5s ease-in-out;
+  animation-delay: .2s;
+}
+@keyframes rayasTresNaranja{
+  0%{
+    opacity: 2;
+  }
+  49%{
+    opacity: 2;
+  }
+  50%{
+    opacity: 0
+  }
+  51%{
+    opacity: 0.5;
+  }
+  52%{
+    opacity: 0.3;
+  }
+  53%{
+    opacity: 1;
+  }
+  54%{
+    opacity: 0;
+  }
+  55%{
+    opacity: 0.7;
+  }
+
+  100%{
+    opacity: 1;
+  }
 }
 
 .ColorAzul, .ColorAzulMarcado {
-  color: #21c1a9;
+  color: rgba(0, 255, 217, 0.7);
 }
 
 .ColorAzulMarcado{
-  text-shadow: 0 0 10px white;
+  color: rgba(0, 255, 217, 1);
+  animation: rayasTresNaranja .5s ease-in-out;
+
+  text-shadow: 0 0 10px rgba(0, 255, 217, 1);
 }
 
 .reload {
