@@ -14,6 +14,7 @@
   width: 130px;
   height: 130px;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 .shapeshifter.play {
   animation-name: play60;

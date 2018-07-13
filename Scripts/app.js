@@ -5,7 +5,7 @@ class CJugador {
         this.Puntaje = 0;
         this.Simbolo = simbolo;
         this.Jugada = null;
-        
+
     }
 }
 class Par {
@@ -56,67 +56,125 @@ class CIA extends CJugador {
             else
                 dx = +1;
         }
-      this.EvaluarPrioridad(dx,dy,x,y,jugada,Tablero);
+        this.EvaluarPrioridad(dx, dy, x, y, jugada, Tablero);
     }
-    EvaluarPrioridad(dx, dy, x, y, jugada, Tablero, salto = true,agregarJugadas=true) {
+    EvaluarPrioridad(dx, dy, x, y, jugada, Tablero, salto = true, agregarJugadas = true) {
         let prioridad = 0;
         let limites = 0;
+        let cambio = false;
         while (limites < 2) {
-            if (!(y + dy < Tablero.length && y + dy >= 0 && x + dx >= 0 && x + dx < Tablero[0].length) || Tablero[y + dy][x + dx] == this.Simbolo)
+            if (!(y + dy < Tablero.length && y + dy >= 0 && x + dx >= 0 && x + dx < Tablero[0].length) || (Tablero[y + dy][x + dx].Simbolo != jugada.Simbolo && Tablero[y + dy][x + dx].Simbolo != '')) {
                 limites++;
+                cambio = true;
+                if(limites==1)
+                break;
+            }
             else if (Tablero[y + dy][x + dx].Simbolo == '') {
-                if (salto  )
-                    if(y + 2 * dy < Tablero.length && y + 2 * dy >= 0 && x + 2 * dx >= 0 && x + 2 * dx < Tablero[0].length)
-                    if(Tablero[y + 2 * dy][x + 2 * dx].Simbolo == jugada.Simbolo)
-                        prioridad += this.EvaluarPrioridad(dx, dy, x + 2 * dx, y + 2 * dy, jugada, Tablero, false,false);
-                    if(limites==0 && agregarJugadas ){
-                        let posiblejugada = new CCoordenada(x + dx, y + dy);
-                        posiblejugada.Simbolo = this.Simbolo;
-                        let PJ=new Par(prioridad,posiblejugada);
-                        this.PosiblesJugadas.push(PJ);
-                    }
-                salto=false;
+                prioridad = this.ContarCadena(x + dx, y + dy, dx * -1, dy * -1, jugada.Simbolo,Tablero);
+                if (salto)
+                    if (y + 2 * dy < Tablero.length && y + 2 * dy >= 0 && x + 2 * dx >= 0 && x + 2 * dx < Tablero[0].length)
+                        if (Tablero[y + 2 * dy][x + 2 * dx].Simbolo == jugada.Simbolo) {
+                            prioridad++;
+                            this.AgregarJugada(x, y, dx, dy, prioridad);
+                            prioridad = 0;
+                            agregarJugadas = false;
+                        }
+                if (agregarJugadas && prioridad>0) {
+                    this.AgregarJugada(x, y, dx, dy, prioridad);
+                    prioridad = 0;
+                }
+                cambio = true;
                 limites++;
             }
-            x+=dx;
-            y+=dy;
-            if (limites == 1) {
-                if(prioridad==0){
+            x += dx;
+            y += dy;
+            if (cambio) {
                 dx *= -1;
                 dy *= -1;
-                }
-                prioridad++;
+                cambio = false;
+            }
+
+            if (agregarJugadas == false && limites == 2)
+                break;
+        }
+        if (agregarJugadas == false)
+            return prioridad;
+    }
+    ContarCadena(x, y, dx, dy, simbolo, Tablero) {
+        let contador = 0;
+        while (true) {
+            if (!(y + dy < Tablero.length && y + dy >= 0 && x + dx >= 0 && x + dx < Tablero[0].length) || Tablero[y + dy][x + dx].Simbolo != simbolo)
+                break;
+            contador++;
+            y+=dy;
+            x+=dx;
+        }
+        if (contador >= 2)
+            return 1;
+        return 0;
+    }
+    AgregarJugada(x, y, dx, dy, prioridad) {
+        let posiblejugada = new CCoordenada(x + dx, y + dy);
+        posiblejugada.Simbolo = this.Simbolo;
+        let datosPosibleJugada = new Array();
+        datosPosibleJugada.push(prioridad);
+        let direccion = new Par(dx, dy);
+        datosPosibleJugada.push(direccion);
+        datosPosibleJugada.push(posiblejugada);
+        if (!this.BuscarJugada(datosPosibleJugada))
+            this.PosiblesJugadas.push(datosPosibleJugada);
+    }
+    BuscarJugada(datosPosibleJugada) {
+        let repetido = false;
+        for (let i = 0; i < this.PosiblesJugadas.length; ++i) {
+            if (this.PosiblesJugadas[i][2].X == datosPosibleJugada[2].X && this.PosiblesJugadas[i][2].Y == datosPosibleJugada[2].Y) {
+                if (this.PosiblesJugadas[i][1].first != datosPosibleJugada[1].first || this.PosiblesJugadas[i][1].second != datosPosibleJugada[1].second)
+                    this.PosiblesJugadas[i][0] += datosPosibleJugada[0];
+                repetido = true;
             }
         }
-        if(agregarJugadas==false)
-        return prioridad;
+        return repetido;
     }
     BuscarJugadaOptima(Tablero) {
         let mayor = 0;
         for (let i = 1; i < this.PosiblesJugadas.length; ++i) {
-            if (this.PosiblesJugadas[mayor].first <= this.PosiblesJugadas[i].first)
+            if (this.PosiblesJugadas[mayor][0] < this.PosiblesJugadas[i][0])
                 mayor = i;
         }
-        Tablero[this.PosiblesJugadas[mayor].second.Y][this.PosiblesJugadas[mayor].second.X].Simbolo = this.Simbolo;
-        this.Jugada = Tablero[this.PosiblesJugadas[mayor].second.Y][this.PosiblesJugadas[mayor].second.X];
+        Tablero[this.PosiblesJugadas[mayor][2].Y][this.PosiblesJugadas[mayor][2].X].Simbolo = this.Simbolo;
+        this.Jugada = Tablero[this.PosiblesJugadas[mayor][2].Y][this.PosiblesJugadas[mayor][2].X]
     }
     //Funcion void
     jugarIA(jugada, limitex, limitey, Tablero) {
 
-       this.PosiblesJugadas = new Array(0);
+        this.PosiblesJugadas = new Array(0);
         //Se analiza las posibles jugadas de defensa que se puede realizar
         this.PensarJugada(jugada, limitex, limitey, Tablero);
         if (this.Jugada != null) {
             //Se analiza las posibles jugadas de ataque que se pueden realizar
             this.PensarJugada(this.Jugada, limitex, limitey, Tablero)
             //Si no se puede realizar ninguna jugada de defensa ni ataque, se busca generar una jugada de ataque
-           /* if (this.PosiblesJugadas.length == 0) {
-                let jugadaNueva = new CCoordenada(this.Jugada.X, this.Jugada.Y);
-                this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
-            }*/
+            /* if (this.PosiblesJugadas.length == 0) {
+                 let jugadaNueva = new CCoordenada(this.Jugada.X, this.Jugada.Y);
+                 this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
+             }*/
         }
         //Se selecciona la jugada con
         //Si no se puede generar ninguna jugada, se juega al azar
+        if (this.PosiblesJugadas.length == 0)
+            this.JugadaRandom(Tablero);
+        else
+            //Se selecciona la jugada con  mayor prioridad
+            this.BuscarJugadaOptima(Tablero);
+    }
+    jugarIA2(simbolo, Tablero) {
+        this.PosiblesJugadas = new Array(0);
+        for (let i = 0; i < Tablero.length; ++i) {
+            for (let j = 0; j < Tablero[0].length; ++j) {
+                if (Tablero[i][j].Simbolo != '')
+                    this.PensarJugada(Tablero[i][j], Tablero[0].length, Tablero.length, Tablero);
+            }
+        }
         if (this.PosiblesJugadas.length == 0)
             this.JugadaRandom(Tablero);
         else
@@ -132,6 +190,7 @@ class CIA extends CJugador {
         } while (Tablero[y][x].Simbolo !== '');
         Tablero[y][x].Simbolo = this.Simbolo;
         this.Jugada = Tablero[y][x];
+        document.getElementById(Tablero[y][x].Y + '-' + Tablero[y][x].X).classList.add('ColorAzul');
     }
 }
 
@@ -242,18 +301,22 @@ class CJuego {
     async Jugar(celda) {
         if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
-            this.ObtenerCoordenada(celda).Simbolo = this.j1.Simbolo;
+            celda.classList.add('ColorRojo');
+            let coordenada = this.ObtenerCoordenada(celda);
+            coordenada.Simbolo = this.j1.Simbolo;
             this.TurnosRestantes--;
             this.ActualizarTablero();
             this.ContarPuntajes();
             this.TerminoTurno = false;
             //Espera un segundo
-            await this.Sleep(1000);
+            let tiempo = Math.round(Math.random() * 1000 + 500);
+            await this.Sleep(tiempo);
             this.TerminoTurno = true;
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.TurnosRestantes !== 0) {
                 //Jugada de la maquina
-                this.maquina.jugarIA(this.ObtenerCoordenada(celda), this.Columnas, this.Filas, this.Tablero);
+                // this.maquina.jugarIA(coordenada, this.Columnas, this.Filas, this.Tablero);
+                this.maquina.jugarIA2(this.j1.Simbolo, this.Tablero);
                 this.TurnosRestantes--;
             }
             this.ActualizarTablero();
@@ -274,6 +337,10 @@ class CJuego {
         let fila = cadena[0].toString();
         let columna = cadena[1].toString();
         return this.Tablero[fila][columna];
+    }
+
+    ObtenerCelda(coordenada) {
+        return document.getElementById(coordenada.Y + '-' + coordenada.X);
     }
 
     //Devuelve true si la celda esta vacia
@@ -308,6 +375,8 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
+                } else {
+                    contador1 = contador2 = 0;
                 }
                 if (contador1 >= 3) puntaje1++;
                 if (contador2 >= 3) puntaje2++;
@@ -324,6 +393,8 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
+                } else {
+                    contador1 = contador2 = 0;
                 }
                 if (contador1 >= 3) puntaje1++;
                 if (contador2 >= 3) puntaje2++;
@@ -346,6 +417,8 @@ class CJuego {
                     } else if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
+                    } else {
+                        contador1 = contador2 = 0;
                     }
                     if (contador1 >= 3) puntaje1++;
                     if (contador2 >= 3) puntaje2++;
@@ -367,6 +440,8 @@ class CJuego {
                     } else if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
+                    } else {
+                        contador1 = contador2 = 0;
                     }
                     if (contador1 >= 3) puntaje1++;
                     if (contador2 >= 3) puntaje2++;
@@ -387,5 +462,50 @@ class CJuego {
 }
 
 document.getElementById('botonJugar').addEventListener('click', () => {
+
+
+
     let juego = new CJuego();
+    var _tr = document.getElementsByTagName('tr');
+    var _td = document.getElementsByTagName('td');
+    var _svgAnimation = document.getElementsByClassName('svg-img');
+    var _svgNeon = document.getElementsByClassName('neon-svg');
+    var _reload = document.getElementsByClassName('reload')[0];
+    var _containerDatos = document.getElementsByClassName('container-datos')[0];
+    _containerDatos.classList.add('container-moveup');
+    _svgAnimation[0].setAttribute("class", "shapeshifter svg-img play");
+    _svgAnimation[1].setAttribute("class", "shapeshifter svg-img play");
+
+    for (var q = 0; q < _svgNeon.length; q++) {
+        _svgNeon[q].classList.add('neonAnimate');
+    }
+
+    if (_tr.length > 2 && _tr.length < 100) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "50px";
+            _td[i].style.width = "50px";
+            _td[i].style.fontSize = "36px";
+        }
+    }
+    if (_tr.length > 9 && _tr.length < 16) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "30px";
+            _td[i].style.width = "30px";
+            _td[i].style.fontSize = "18px";
+        }
+    }
+
+    _reload.classList.add('reload-animation');
+
+    // FUNCION DEL RESET DEL JUEGO
+    _reload.addEventListener('click', f => {
+        _reload.classList.remove('reload-animation');
+        _containerDatos.classList.remove('container-moveup');
+        _svgAnimation[0].setAttribute("class", "shapeshifter svg-img");
+        _svgAnimation[1].setAttribute("class", "shapeshifter svg-img");
+        for (var q = 0; q < _svgNeon.length; q++) {
+            _svgNeon[q].classList.remove('neonAnimate');
+        }
+    })
+    document.getElementById('puntaje').innerText = '0 - 0';
 });
