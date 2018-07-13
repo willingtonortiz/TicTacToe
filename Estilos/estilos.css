@@ -100,41 +100,33 @@
   outline: none;
 }
 
-#NombreJugador {
-  
-  
+#NombreJugador {  
   border: 1px solid #eee;
   color: #eee;
   text-align: center;
   width: 300px;
   font-family: mySpace;
-
   background: transparent;
   font-size: 22px;
-  letter-spacing: 5px;
-  
+  letter-spacing: 5px;  
 }
 
-#filas {
-  
+#filas {  
   border: 1px solid #21c1a9;
   color: #21c1a9;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  
 }
 
-#columnas {
-  
+#columnas {  
   border: 1px solid #aa21c1;
   color: #aa21c1;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  
 }
 
 #botonJugar {
@@ -182,6 +174,7 @@
   text-shadow: 0 0 10px #ff1c3e;
   font-size: 36px;
 }
+
 .marcador {
   display: flex;
   justify-content: center;
@@ -232,7 +225,7 @@ td {
   font-family: mySpace;
   text-align: center;
   font-size: 36px;
-  color: #306cf7;
+   color: #306cf7; 
 }
 
 table,
@@ -241,13 +234,69 @@ td {
   border: 1px solid #aaa;
 }
 
-.ColorRojo {
-  color: #ff1c3e;
+.turnoHumano{
+  transition: all .2s ease-in-out;
+  transition-delay: .5s;
+  opacity: 1;
+}
+.turnoAI{
+  opacity: 1;
+  transition: all .2s ease-in-out;
+  transition-delay: .1s;
 }
 
-.ColorAzul {
-  color: #21c1a9;
+.ColorRojo, .ColorRojoMarcado {
+  color: rgba(255, 217, 0, 0.70);
 }
+
+.ColorRojoMarcado{
+  color: rgb(255, 217, 0);
+  text-shadow: 0 0 10px rgb(255, 217, 0);
+  animation: rayasTresNaranja .5s ease-in-out;
+  animation-delay: .2s;
+}
+@keyframes rayasTresNaranja{
+  0%{
+    opacity: 2;
+  }
+  49%{
+    opacity: 2;
+  }
+  50%{
+    opacity: 0
+  }
+  51%{
+    opacity: 0.5;
+  }
+  52%{
+    opacity: 0.3;
+  }
+  53%{
+    opacity: 1;
+  }
+  54%{
+    opacity: 0;
+  }
+  55%{
+    opacity: 0.7;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+.ColorAzul, .ColorAzulMarcado {
+  color: rgba(0, 255, 217, 0.7);
+}
+
+.ColorAzulMarcado{
+  color: rgba(0, 255, 217, 1);
+  animation: rayasTresNaranja .5s ease-in-out;
+
+  text-shadow: 0 0 10px rgba(0, 255, 217, 1);
+}
+
 .reload {
   position: absolute;
   top: 10%;

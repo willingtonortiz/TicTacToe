@@ -66,11 +66,15 @@ class CIA extends CJugador {
             if (!(y + dy < Tablero.length && y + dy >= 0 && x + dx >= 0 && x + dx < Tablero[0].length) || (Tablero[y + dy][x + dx].Simbolo != jugada.Simbolo && Tablero[y + dy][x + dx].Simbolo != '')) {
                 limites++;
                 cambio = true;
-                if(limites==1)
-                break;
+                if (limites == 1)
+                    break;
             }
             else if (Tablero[y + dy][x + dx].Simbolo == '') {
-                prioridad = this.ContarCadena(x + dx, y + dy, dx * -1, dy * -1, jugada.Simbolo,Tablero);
+                console.log('Turno de bot');
+                document.getElementsByClassName('neon-svg')[0].classList.add('turnoHumano');
+                document.getElementsByClassName('neon-svg')[1].classList.remove('turnoAI');
+
+                prioridad = this.ContarCadena(x + dx, y + dy, dx * -1, dy * -1, jugada.Simbolo, Tablero);
                 if (salto)
                     if (y + 2 * dy < Tablero.length && y + 2 * dy >= 0 && x + 2 * dx >= 0 && x + 2 * dx < Tablero[0].length)
                         if (Tablero[y + 2 * dy][x + 2 * dx].Simbolo == jugada.Simbolo) {
@@ -79,7 +83,7 @@ class CIA extends CJugador {
                             prioridad = 0;
                             agregarJugadas = false;
                         }
-                if (agregarJugadas && prioridad>0) {
+                if (agregarJugadas && prioridad > 0) {
                     this.AgregarJugada(x, y, dx, dy, prioridad);
                     prioridad = 0;
                 }
@@ -106,8 +110,8 @@ class CIA extends CJugador {
             if (!(y + dy < Tablero.length && y + dy >= 0 && x + dx >= 0 && x + dx < Tablero[0].length) || Tablero[y + dy][x + dx].Simbolo != simbolo)
                 break;
             contador++;
-            y+=dy;
-            x+=dx;
+            y += dy;
+            x += dx;
         }
         if (contador >= 2)
             return 1;
@@ -143,6 +147,7 @@ class CIA extends CJugador {
         }
         Tablero[this.PosiblesJugadas[mayor][2].Y][this.PosiblesJugadas[mayor][2].X].Simbolo = this.Simbolo;
         this.Jugada = Tablero[this.PosiblesJugadas[mayor][2].Y][this.PosiblesJugadas[mayor][2].X]
+        document.getElementById(this.Jugada.Y + '-' + this.Jugada.X).classList.add('ColorAzul');
     }
     //Funcion void
     jugarIA(jugada, limitex, limitey, Tablero) {
@@ -302,6 +307,9 @@ class CJuego {
         if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
             celda.classList.add('ColorRojo');
+            console.log('Turno humano');
+            document.getElementsByClassName('neon-svg')[1].classList.add('turnoAI');
+            document.getElementsByClassName('neon-svg')[0].classList.remove('turnoHumano');
             let coordenada = this.ObtenerCoordenada(celda);
             coordenada.Simbolo = this.j1.Simbolo;
             this.TurnosRestantes--;
@@ -366,42 +374,69 @@ class CJuego {
             contador1 = 0;
         let puntaje2 = 0,
             contador2 = 0;
+        let Marcados1, Marcados2;
         //Conteo horizontal
         for (let i = 0; i < this.Filas; ++i) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let j = 0; j < this.Columnas; ++j) {
                 if (this.Tablero[i][j].Simbolo === 'X') {
                     contador1++;
+                    Marcados1.push(this.Tablero[i][j]);
                     contador2 = 0;
+                    Marcados2 = new Array();
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
-                    contador2++;
                     contador1 = 0;
+                    Marcados1 = new Array();
+                    contador2++;
+                    Marcados2.push(this.Tablero[i][j]);
                 } else {
                     contador1 = contador2 = 0;
+                    Marcados1 = new Array();
+                    Marcados2 = new Array();
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                if (contador1 >= 3) {
+                    puntaje1++;
+                    this.MarcarTresEnRaya(Marcados1, 'X');
+                }
+                if (contador2 >= 3) {
+                    puntaje2++;
+                    this.MarcarTresEnRaya(Marcados2, 'O');
+                }
             }
             contador1 = contador2 = 0;
         }
-
         //Conteo vertical
         for (let j = 0; j < this.Columnas; ++j) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let i = 0; i < this.Filas; ++i) {
                 if (this.Tablero[i][j].Simbolo === 'X') {
                     contador1++;
+                    Marcados1.push(this.Tablero[i][j]);
                     contador2 = 0;
+                    Marcados2 = new Array();
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
-                    contador2++;
                     contador1 = 0;
+                    Marcados1 = new Array();
+                    contador2++;
+                    Marcados2.push(this.Tablero[i][j]);
                 } else {
                     contador1 = contador2 = 0;
+                    Marcados1 = new Array();
+                    Marcados2 = new Array();
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                if (contador1 >= 3) {
+                    puntaje1++;
+                    this.MarcarTresEnRaya(Marcados1, 'X');
+                }
+                if (contador2 >= 3) {
+                    puntaje2++;
+                    this.MarcarTresEnRaya(Marcados2, 'O');
+                }
             }
             contador1 = contador2 = 0;
         }
-
         //Conteo diagonal
         //Diagonal de 135 grados
         let cantDiag = this.Filas + this.Columnas - 1,
@@ -409,19 +444,33 @@ class CJuego {
             inicio1 = this.Filas - 1,
             inicio2 = 0;
         for (let m = 0; m < cantDiag; ++m) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let n = 0; n < maxDiag; ++n) {
                 if (this.Tablero[inicio1 + n] !== undefined && this.Tablero[inicio1 + n][inicio2 + n] !== undefined) {
                     if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'X') {
                         contador1++;
+                        Marcados1.push(this.Tablero[inicio1 + n][inicio2 + n]);
                         contador2 = 0;
+                        Marcados2 = new Array();
                     } else if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'O') {
-                        contador2++;
                         contador1 = 0;
+                        Marcados1 = new Array();
+                        contador2++;
+                        Marcados2.push(this.Tablero[inicio1 + n][inicio2 + n]);
                     } else {
                         contador1 = contador2 = 0;
+                        Marcados1 = new Array();
+                        Marcados2 = new Array();
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    if (contador1 >= 3) {
+                        puntaje1++;
+                        this.MarcarTresEnRaya(Marcados1, 'X');
+                    }
+                    if (contador2 >= 3) {
+                        puntaje2++;
+                        this.MarcarTresEnRaya(Marcados2, 'O');
+                    }
                 }
             }
             if (inicio1 !== 0) inicio1--;
@@ -432,19 +481,33 @@ class CJuego {
         inicio1 = 0;
         inicio2 = 0;
         for (let m = 0; m < cantDiag; ++m) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let n = 0; n < maxDiag; ++n) {
                 if (this.Tablero[inicio1 - n] !== undefined && this.Tablero[inicio1 - n][inicio2 + n] !== undefined) {
                     if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'X') {
                         contador1++;
+                        Marcados1.push(this.Tablero[inicio1 - n][inicio2 + n]);
                         contador2 = 0;
+                        Marcados2 = new Array();
                     } else if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'O') {
-                        contador2++;
                         contador1 = 0;
+                        Marcados1 = new Array();
+                        contador2++;
+                        Marcados2.push(this.Tablero[inicio1 - n][inicio2 + n]);
                     } else {
                         contador1 = contador2 = 0;
+                        Marcados1 = new Array();
+                        Marcados2 = new Array();
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    if (contador1 >= 3) {
+                        puntaje1++;
+                        this.MarcarTresEnRaya(Marcados1, 'X');
+                    }
+                    if (contador2 >= 3) {
+                        puntaje2++;
+                        this.MarcarTresEnRaya(Marcados2, 'O');
+                    }
                 }
             }
             if (inicio1 !== this.Filas - 1) inicio1++;
@@ -455,6 +518,24 @@ class CJuego {
         return this;
     }
 
+    MarcarTresEnRaya(Vector, Simbolo) {
+        if (Simbolo === 'X') {
+            for (let i = 0; i < Vector.length; i++) {
+                let Celda = this.ObtenerCelda(Vector[i]);
+                if (!Celda.classList.contains('ColorRojoMarcado')) {
+                    Celda.classList.add('ColorRojoMarcado');
+                }
+            }
+        } else {
+            for (let i = 0; i < Vector.length; i++) {
+                let Celda = this.ObtenerCelda(Vector[i]);
+                if (!Celda.classList.contains('ColorAzulMarcado')) {
+                    Celda.classList.add('ColorAzulMarcado');
+                }
+            }
+        }
+    }
+
     ActualizarPuntajes(puntaje1, puntaje2) {
         document.getElementById('puntaje').innerText = puntaje1 + ' - ' + puntaje2;
         return this;
@@ -462,9 +543,6 @@ class CJuego {
 }
 
 document.getElementById('botonJugar').addEventListener('click', () => {
-
-
-
     let juego = new CJuego();
     var _tr = document.getElementsByTagName('tr');
     var _td = document.getElementsByTagName('td');
@@ -489,9 +567,9 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     }
     if (_tr.length > 9 && _tr.length < 16) {
         for (var i = 0; i < _td.length; i++) {
-            _td[i].style.height = "30px";
-            _td[i].style.width = "30px";
-            _td[i].style.fontSize = "18px";
+            _td[i].style.height = "40px";
+            _td[i].style.width = "40px";
+            _td[i].style.fontSize = "25px";
         }
     }
 
