@@ -295,42 +295,63 @@ class CJuego {
             contador1 = 0;
         let puntaje2 = 0,
             contador2 = 0;
+        let Marcados1, Marcados2;
         //Conteo horizontal
         for (let i = 0; i < this.Filas; ++i) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let j = 0; j < this.Columnas; ++j) {
                 if (this.Tablero[i][j].Simbolo === 'X') {
                     contador1++;
+                    Marcados1.push(this.Tablero[i][j]);
                     contador2 = 0;
+                    Marcados2 = new Array();
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
-                    contador2++;
                     contador1 = 0;
+                    Marcados1 = new Array();
+                    contador2++;
+                    Marcados2.push(this.Tablero[i][j]);
                 } else {
                     contador1 = contador2 = 0;
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                if (contador1 >= 3) {
+                    puntaje1++;
+                    this.MarcarTresEnRaya(Marcados1, 'X');
+                }
+                if (contador2 >= 3) {
+                    puntaje2++;
+                    this.MarcarTresEnRaya(Marcados2, 'O');
+                }
             }
             contador1 = contador2 = 0;
         }
-
         //Conteo vertical
         for (let j = 0; j < this.Columnas; ++j) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let i = 0; i < this.Filas; ++i) {
                 if (this.Tablero[i][j].Simbolo === 'X') {
                     contador1++;
+                    Marcados1.push(this.Tablero[i][j]);
                     contador2 = 0;
+                    Marcados2 = new Array();
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
-                    contador2++;
                     contador1 = 0;
+                    Marcados1 = new Array();
+                    contador2++;
+                    Marcados2.push(this.Tablero[i][j]);
                 } else {
                     contador1 = contador2 = 0;
                 }
-                if (contador1 >= 3) puntaje1++;
-                if (contador2 >= 3) puntaje2++;
+                if (contador1 >= 3){ puntaje1++;
+                    this.MarcarTresEnRaya(Marcados1, 'X');
+                }
+                if (contador2 >= 3){ puntaje2++;
+                    this.MarcarTresEnRaya(Marcados2, 'O');
+                }
             }
             contador1 = contador2 = 0;
         }
-
         //Conteo diagonal
         //Diagonal de 135 grados
         let cantDiag = this.Filas + this.Columnas - 1,
@@ -338,19 +359,29 @@ class CJuego {
             inicio1 = this.Filas - 1,
             inicio2 = 0;
         for (let m = 0; m < cantDiag; ++m) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let n = 0; n < maxDiag; ++n) {
                 if (this.Tablero[inicio1 + n] !== undefined && this.Tablero[inicio1 + n][inicio2 + n] !== undefined) {
                     if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'X') {
                         contador1++;
+                        Marcados1.push(this.Tablero[inicio1 + n][inicio2 + n]);
                         contador2 = 0;
+                        Marcados2 = new Array();
                     } else if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'O') {
-                        contador2++;
                         contador1 = 0;
+                        Marcados1 = new Array();
+                        contador2++;
+                        Marcados2.push(this.Tablero[inicio1 + n][inicio2 + n]);
                     } else {
                         contador1 = contador2 = 0;
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    if (contador1 >= 3) {puntaje1++;
+                        this.MarcarTresEnRaya(Marcados1, 'X');
+                    }
+                    if (contador2 >= 3) {puntaje2++;
+                        this.MarcarTresEnRaya(Marcados2, 'O');
+                    }
                 }
             }
             if (inicio1 !== 0) inicio1--;
@@ -361,19 +392,29 @@ class CJuego {
         inicio1 = 0;
         inicio2 = 0;
         for (let m = 0; m < cantDiag; ++m) {
+            Marcados1 = new Array();
+            Marcados2 = new Array();
             for (let n = 0; n < maxDiag; ++n) {
                 if (this.Tablero[inicio1 - n] !== undefined && this.Tablero[inicio1 - n][inicio2 + n] !== undefined) {
                     if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'X') {
                         contador1++;
+                        Marcados1.push(this.Tablero[inicio1 - n][inicio2 + n]);
                         contador2 = 0;
+                        Marcados2 = new Array();
                     } else if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'O') {
-                        contador2++;
                         contador1 = 0;
+                        Marcados1 = new Array();
+                        contador2++;
+                        Marcados2.push(this.Tablero[inicio1 - n][inicio2 + n]);
                     } else {
                         contador1 = contador2 = 0;
                     }
-                    if (contador1 >= 3) puntaje1++;
-                    if (contador2 >= 3) puntaje2++;
+                    if (contador1 >= 3) {puntaje1++;
+                        this.MarcarTresEnRaya(Marcados1, 'X');
+                    }
+                    if (contador2 >= 3) {puntaje2++;
+                        this.MarcarTresEnRaya(Marcados2, 'O');
+                    }
                 }
             }
             if (inicio1 !== this.Filas - 1) inicio1++;
@@ -384,6 +425,24 @@ class CJuego {
         return this;
     }
 
+    MarcarTresEnRaya(Vector, Simbolo) {
+        if (Simbolo === 'X') {
+            for (let i = 0; i < Vector.length; i++) {
+                let Celda = this.ObtenerCelda(Vector[i]);
+                if (!Celda.classList.contains('ColorRojoMarcado')) {
+                    Celda.classList.add('ColorRojoMarcado');
+                }
+            }
+        } else {
+            for (let i = 0; i < Vector.length; i++) {
+                let Celda = this.ObtenerCelda(Vector[i]);
+                if (!Celda.classList.contains('ColorAzulMarcado')) {
+                    Celda.classList.add('ColorAzulMarcado');
+                }
+            }
+        }
+    }
+
     ActualizarPuntajes(puntaje1, puntaje2) {
         document.getElementById('puntaje').innerText = puntaje1 + ' - ' + puntaje2;
         return this;
@@ -391,9 +450,6 @@ class CJuego {
 }
 
 document.getElementById('botonJugar').addEventListener('click', () => {
-
-    
-    
     let juego = new CJuego();
     var _tr = document.getElementsByTagName('tr');
     var _td = document.getElementsByTagName('td');
@@ -405,7 +461,7 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     _svgAnimation[0].setAttribute("class", "shapeshifter svg-img play");
     _svgAnimation[1].setAttribute("class", "shapeshifter svg-img play");
 
-    for( var  q = 0 ;  q< _svgNeon.length;q++){
+    for (var q = 0; q < _svgNeon.length; q++) {
         _svgNeon[q].classList.add('neonAnimate');
     }
 
@@ -425,14 +481,14 @@ document.getElementById('botonJugar').addEventListener('click', () => {
     }
 
     _reload.classList.add('reload-animation');
-    
+
     // FUNCION DEL RESET DEL JUEGO
-    _reload.addEventListener('click',f =>{
+    _reload.addEventListener('click', f => {
         _reload.classList.remove('reload-animation');
         _containerDatos.classList.remove('container-moveup');
         _svgAnimation[0].setAttribute("class", "shapeshifter svg-img");
         _svgAnimation[1].setAttribute("class", "shapeshifter svg-img");
-        for( var  q = 0 ;  q< _svgNeon.length;q++){
+        for (var q = 0; q < _svgNeon.length; q++) {
             _svgNeon[q].classList.remove('neonAnimate');
         }
     })

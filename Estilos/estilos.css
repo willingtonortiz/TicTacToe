@@ -100,41 +100,33 @@
   outline: none;
 }
 
-#NombreJugador {
-  
-  
+#NombreJugador {  
   border: 1px solid #eee;
   color: #eee;
   text-align: center;
   width: 300px;
   font-family: mySpace;
-
   background: transparent;
   font-size: 22px;
-  letter-spacing: 5px;
-  
+  letter-spacing: 5px;  
 }
 
-#filas {
-  
+#filas {  
   border: 1px solid #21c1a9;
   color: #21c1a9;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  
 }
 
-#columnas {
-  
+#columnas {  
   border: 1px solid #aa21c1;
   color: #aa21c1;
   text-align: center;
   width: 150px;
   font-family: mySpace;
   background: transparent;
-  
 }
 
 #botonJugar {
@@ -182,6 +174,7 @@
   text-shadow: 0 0 10px #ff1c3e;
   font-size: 36px;
 }
+
 .marcador {
   display: flex;
   justify-content: center;
@@ -241,13 +234,22 @@ td {
   border: 1px solid #aaa;
 }
 
-.ColorRojo {
+.ColorRojo, .ColorRojoMarcado {
   color: #ff1c3e;
 }
 
-.ColorAzul {
+.ColorRojoMarcado{
+  text-shadow: 0 0 10px white;
+}
+
+.ColorAzul, .ColorAzulMarcado {
   color: #21c1a9;
 }
+
+.ColorAzulMarcado{
+  text-shadow: 0 0 10px white;
+}
+
 .reload {
   position: absolute;
   top: 10%;
