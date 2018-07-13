@@ -71,6 +71,7 @@ class CIA extends CJugador {
             if (Tablero[y + dy][x + dx].Simbolo == '') {
                 Tablero[y + dy][x + dx].Simbolo = this.Simbolo;
                 this.Jugada = Tablero[y + dy][x + dx];
+                document.getElementById(Tablero[y + dy][x + dx].Y + '-' + Tablero[y + dy][x + dx].X).classList.add('ColorAzul');
                 seguir = false;
             } else {
                 if (Tablero[y + dy][x + dx].Simbolo === this.Simbolo) {
@@ -119,6 +120,7 @@ class CIA extends CJugador {
         } while (Tablero[y][x].Simbolo !== '');
         Tablero[y][x].Simbolo = this.Simbolo;
         this.Jugada = Tablero[y][x];
+        document.getElementById(Tablero[y][x].Y + '-' + Tablero[y][x].X).classList.add('ColorAzul');
     }
 }
 
@@ -229,18 +231,21 @@ class CJuego {
     async Jugar(celda) {
         if (this.EsCeldaVacia(celda) && this.TerminoTurno) {
             //Jugada del jugador
-            this.ObtenerCoordenada(celda).Simbolo = this.j1.Simbolo;
+            celda.classList.add('ColorRojo');
+            let coordenada = this.ObtenerCoordenada(celda);
+            coordenada.Simbolo = this.j1.Simbolo;
             this.TurnosRestantes--;
             this.ActualizarTablero();
             this.ContarPuntajes();
             this.TerminoTurno = false;
             //Espera un segundo
-            await this.Sleep(1000);
+            let tiempo = Math.round(Math.random() * 1000 + 500);
+            await this.Sleep(tiempo);
             this.TerminoTurno = true;
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.TurnosRestantes !== 0) {
                 //Jugada de la maquina
-                this.maquina.jugarIA(this.ObtenerCoordenada(celda), this.Columnas, this.Filas, this.Tablero);
+                this.maquina.jugarIA(coordenada, this.Columnas, this.Filas, this.Tablero);
                 this.TurnosRestantes--;
             }
             this.ActualizarTablero();
@@ -261,6 +266,10 @@ class CJuego {
         let fila = cadena[0].toString();
         let columna = cadena[1].toString();
         return this.Tablero[fila][columna];
+    }
+
+    ObtenerCelda(coordenada) {
+        return document.getElementById(coordenada.Y + '-' + coordenada.X);
     }
 
     //Devuelve true si la celda esta vacia
@@ -295,6 +304,8 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
+                } else {
+                    contador1 = contador2 = 0;
                 }
                 if (contador1 >= 3) puntaje1++;
                 if (contador2 >= 3) puntaje2++;
@@ -311,6 +322,8 @@ class CJuego {
                 } else if (this.Tablero[i][j].Simbolo === 'O') {
                     contador2++;
                     contador1 = 0;
+                } else {
+                    contador1 = contador2 = 0;
                 }
                 if (contador1 >= 3) puntaje1++;
                 if (contador2 >= 3) puntaje2++;
@@ -333,6 +346,8 @@ class CJuego {
                     } else if (this.Tablero[inicio1 + n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
+                    } else {
+                        contador1 = contador2 = 0;
                     }
                     if (contador1 >= 3) puntaje1++;
                     if (contador2 >= 3) puntaje2++;
@@ -354,6 +369,8 @@ class CJuego {
                     } else if (this.Tablero[inicio1 - n][inicio2 + n].Simbolo === 'O') {
                         contador2++;
                         contador1 = 0;
+                    } else {
+                        contador1 = contador2 = 0;
                     }
                     if (contador1 >= 3) puntaje1++;
                     if (contador2 >= 3) puntaje2++;
@@ -374,5 +391,50 @@ class CJuego {
 }
 
 document.getElementById('botonJugar').addEventListener('click', () => {
+
+    
+    
     let juego = new CJuego();
+    var _tr = document.getElementsByTagName('tr');
+    var _td = document.getElementsByTagName('td');
+    var _svgAnimation = document.getElementsByClassName('svg-img');
+    var _svgNeon = document.getElementsByClassName('neon-svg');
+    var _reload = document.getElementsByClassName('reload')[0];
+    var _containerDatos = document.getElementsByClassName('container-datos')[0];
+    _containerDatos.classList.add('container-moveup');
+    _svgAnimation[0].setAttribute("class", "shapeshifter svg-img play");
+    _svgAnimation[1].setAttribute("class", "shapeshifter svg-img play");
+
+    for( var  q = 0 ;  q< _svgNeon.length;q++){
+        _svgNeon[q].classList.add('neonAnimate');
+    }
+
+    if (_tr.length > 2 && _tr.length < 100) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "50px";
+            _td[i].style.width = "50px";
+            _td[i].style.fontSize = "36px";
+        }
+    }
+    if (_tr.length > 9 && _tr.length < 16) {
+        for (var i = 0; i < _td.length; i++) {
+            _td[i].style.height = "30px";
+            _td[i].style.width = "30px";
+            _td[i].style.fontSize = "18px";
+        }
+    }
+
+    _reload.classList.add('reload-animation');
+    
+    // FUNCION DEL RESET DEL JUEGO
+    _reload.addEventListener('click',f =>{
+        _reload.classList.remove('reload-animation');
+        _containerDatos.classList.remove('container-moveup');
+        _svgAnimation[0].setAttribute("class", "shapeshifter svg-img");
+        _svgAnimation[1].setAttribute("class", "shapeshifter svg-img");
+        for( var  q = 0 ;  q< _svgNeon.length;q++){
+            _svgNeon[q].classList.remove('neonAnimate');
+        }
+    })
+    document.getElementById('puntaje').innerText = '0 - 0';
 });
