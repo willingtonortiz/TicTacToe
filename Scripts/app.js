@@ -79,9 +79,8 @@ class CIA extends CJugador {
                     if (y + 2 * dy < Tablero.length && y + 2 * dy >= 0 && x + 2 * dx >= 0 && x + 2 * dx < Tablero[0].length)
                         if (Tablero[y + 2 * dy][x + 2 * dx].Simbolo == jugada.Simbolo) {
                             prioridad++;
-                            this.AgregarJugada(x, y, dx, dy, prioridad);
-                            prioridad = 0;
-                            agregarJugadas = false;
+                            this.AgregarJugada(x, y, dx, dy, prioridad,true);
+                            prioridad --;
                         }
                 if (agregarJugadas && prioridad > 0) {
                     this.AgregarJugada(x, y, dx, dy, prioridad);
@@ -117,7 +116,7 @@ class CIA extends CJugador {
             return 1;
         return 0;
     }
-    AgregarJugada(x, y, dx, dy, prioridad) {
+    AgregarJugada(x, y, dx, dy, prioridad,salto=false) {
         let posiblejugada = new CCoordenada(x + dx, y + dy);
         posiblejugada.Simbolo = this.Simbolo;
         let datosPosibleJugada = new Array();
@@ -125,9 +124,20 @@ class CIA extends CJugador {
         let direccion = new Par(dx, dy);
         datosPosibleJugada.push(direccion);
         datosPosibleJugada.push(posiblejugada);
-        if (!this.BuscarJugada(datosPosibleJugada))
+        if (!this.BuscarJugada(datosPosibleJugada)){
+            if(!salto)
             this.PosiblesJugadas.push(datosPosibleJugada);
-    }
+            else{
+                datosPosibleJugada[1].first*=-1;
+                datosPosibleJugada[1].second*=-1;
+                if(!this.BuscarJugada(datosPosibleJugada)){
+                    datosPosibleJugada[1].first*=-1;
+                    datosPosibleJugada[1].second*=-1;
+                    this.PosiblesJugadas.push(datosPosibleJugada);
+                }
+            }
+        }
+        }
     BuscarJugada(datosPosibleJugada) {
         let repetido = false;
         for (let i = 0; i < this.PosiblesJugadas.length; ++i) {
