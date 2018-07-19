@@ -1,7 +1,7 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
     padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 @font-face {
@@ -11,45 +11,38 @@
 }
 
 .container {
-    width: 100%;
     height: 100vh;
     background: linear-gradient(45deg, rgba(97, 7, 7, 0.62), rgba(5, 17, 79, 1)), url("../Img/Fondo.jpg") no-repeat;
     background-position: center center;
     background-size: cover;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    align-items: center;
     overflow: hidden;
-    .container-datos {
-        width: 100%;
+    #contenedorDatos {
         height: 100vh;
         top: 0%;
-        left: 0%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         transition: all 0.8s ease-in-out;
-        .icon-header {
-            width: 70%;
-            height: 25vh;
-            margin: 0 auto;
+        .icon-header,
+        .title,
+        .datos-form {
+            margin: 3% 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+        }
+        .icon-header {
+            height: 25vh;
+            flex-direction: row;
+            justify-content: space-between;
             img {
-                margin: 0 40px;
-                max-width: 300px;
+                width: 33.33%;
+                padding: 2%;
             }
         }
         .title {
-            width: 70%;
-            height: 25vh;
-            text-align: center;
             font-family: mySpace;
-            display: flex;
+            font-size: 26px;
+            flex-direction: row;
             justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            font-size: 36px;
-            font-weight: 10;
             #tic {
                 color: #aa21c1;
                 text-shadow: 0 0 100px #aa21c1;
@@ -64,105 +57,120 @@
             }
         }
         .datos-form {
-            width: 70%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            flex-flow: column nowrap;
-            .input {
-                margin: 10px 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                input {
-                    padding: 10px 25px;
-                    border-radius: 30px;
-                    background: rgba(255, 255, 255, 0.02);
-                    &:focus {
-                        outline: none;
-                    }
+            input {
+                padding: 10px 25px;
+                border-radius: 15px;
+                background: rgba(255, 255, 255, 0.02);
+                font-family: mySpace;
+                text-align: center;
+                background: transparent;
+                margin: 15px 0;
+                font-size: 22px;
+                &:focus {
+                    outline: none;
                 }
-                #NombreJugador {
-                    border: 1px solid #eee;
-                    color: #eee;
-                    text-align: center;
-                    width: 300px;
-                    font-family: mySpace;
-                    background: transparent;
-                    font-size: 22px;
-                    letter-spacing: 5px;
-                }
-                #filas {
-                    border: 1px solid #21c1a9;
-                    color: #21c1a9;
-                    text-align: center;
-                    width: 150px;
-                    font-family: mySpace;
-                    background: transparent;
-                }
-                #columnas {
-                    border: 1px solid #aa21c1;
-                    color: #aa21c1;
-                    text-align: center;
-                    width: 150px;
-                    font-family: mySpace;
-                    background: transparent;
-                }
-                #botonJugar {
-                    width: 250px;
-                    text-align: center;
-                    background: #1f3e84;
-                    border: none;
-                    text-transform: uppercase;
-                    font-weight: 700;
-                    letter-spacing: 1px;
-                    color: #eee;
-                    font-family: "Quicksand", sans-serif;
-                    cursor: pointer;
-                    &:active {
-                        transform: scale(0.95);
-                    }
+            }
+            #filas,
+            #columnas,
+            #NombreJugador {
+                width: 70%;
+            }
+            #NombreJugador {
+                border: 1px solid #eee;
+                color: #eee;
+                letter-spacing: 5px;
+            }
+            #filas {
+                border: 1px solid #21c1a9;
+                color: #21c1a9;
+            }
+            #columnas {
+                border: 1px solid #aa21c1;
+                color: #aa21c1;
+            }
+            #botonJugar {
+                width: 50%;
+                background: #1f3e84;
+                border: none;
+                font-weight: 700;
+                letter-spacing: 1px;
+                color: #eee;
+                font-family: "Quicksand", sans-serif;
+                cursor: pointer;
+                &:active {
+                    transform: scale(0.95);
                 }
             }
         }
     }
-    .container-juego {
-        width: 100%;
+    #contenedorJuego {
         height: 100vh;
         display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-flow: column wrap;
-        .marcador {
+        flex-direction: column;
+        .marcador,
+        #regresar,
+        #contenedor {
             display: flex;
+            margin: 3% 0;
+        }
+        .marcador {
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            margin: 30px auto;
-            .neon-svg {
-                opacity: 0;
+            .shapeshifter {
+                margin: 10px 0;
+                width: 100px;
+                height: 100px;
+                .neon-svg {
+                    width: inherit;
+                    height: inherit;
+                }
             }
             #puntaje {
                 color: #ff1c3e;
                 font-family: mySpace;
                 text-shadow: 0 0 10px #ff1c3e;
-                font-size: 36px;
+                font-size: 30px;
+                text-align: center;
+                margin: 0 15px;
             }
         }
-        .reload {
-            position: absolute;
-            top: 10%;
-            right: 10%;
-            font-size: 42px;
-            color: #eee;
-            cursor: pointer;
-            transition: all .5s ease-in-out;
-            z-index: -1;
-            opacity: 0;
-            &:hover {
-                transform: rotate(270deg);
-                text-shadow: 0 0 10px #eee;
+        #regresar {
+            flex-direction: row;
+            justify-content: flex-end;
+            #reload {
+                margin-right: 20%;
+                font-size: 42px;
+                color: #eee;
+                cursor: pointer;
+                transition: all .5s ease-in-out;
+                z-index: -1;
+                opacity: 0;
+                &:hover {
+                    transform: rotate(270deg);
+                    text-shadow: 0 0 10px #eee;
+                }
+            }
+        }
+        #contenedor {
+            justify-content: center;
+            height: 100%;
+            table {
+                border-collapse: collapse;
+                &,
+                tr,
+                td {
+                    border: 1px solid #aaa;
+                }
+                tr,
+                td {
+                    font-family: mySpace;
+                    text-align: center;
+                    color: #306cf7;
+                }
             }
         }
     }
@@ -170,382 +178,138 @@
 
 .container-moveup {
     position: absolute;
-    top: -100%;
+    top: -100% !important;
 }
 
 .neonAnimate {
     animation: neonAI 6s linear;
 }
 
-table {
-    border-collapse: collapse;
-    &,
-    tr,
-    td {
-        border: 1px solid #aaa;
-    }
-    tr,
-    td {
-        font-family: mySpace;
-        text-align: center;
-        font-size: 36px;
-        color: #306cf7;
-    }
+.reload-animation {
+    z-index: 1 !important;
+    opacity: 1 !important;
+    animation: reload-giro 1.5s ease-in-out;
 }
 
 .ColorRojo,
 .ColorRojoMarcado {
-    color: #ff1c3e;
+    color: #ff1c3e !important;
 }
 
 .ColorRojoMarcado {
-    text-shadow: 0 0 10px white;
+    text-shadow: 0 0 10px white !important;
 }
 
 .ColorAzul,
 .ColorAzulMarcado {
-    color: #21c1a9;
+    color: #21c1a9 !important;
 }
 
 .ColorAzulMarcado {
-    text-shadow: 0 0 10px white;
+    text-shadow: 0 0 10px white !important;
 }
 
-.reload-animation {
-    z-index: 1;
-    opacity: 1;
-    animation: reload-giro 1.5s ease-in-out;
+.shapeshifter {
+    animation-duration: 1000ms;
+    animation-timing-function: steps(60);
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-/* =========== BIG DESKTOP ===========  */
+.shapeshifter.play {
+    animation-name: play60;
+}
 
-@media screen and (max-width: 1920px) {
+@media screen and (min-width: 768px) {
     .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: flex-start !important;
-        }
-    }
-    .icon-header img {
-        max-width: 200px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 22px !important;
-    }
-    #filas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-    .marcador .submarcado {
-        margin: 0 40px;
-    }
-}
-
-/* =========== lAPTOPS ===========  */
-
-@media screen and (max-width: 1600px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-        }
-    }
-    .icon-header img {
-        max-width: 200px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 22px !important;
-    }
-    #filas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-}
-
-@media screen and (max-width: 1440px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-        }
-    }
-    .icon-header img {
-        max-width: 200px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 22px !important;
-    }
-    #filas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 16px !important;
-        width: 150px !important;
-    }
-}
-
-@media screen and (max-width: 1366px) {
-    .container {
-        justify-content: space-around !important;
-        .container-datos {
-            title {
-                height: 10vh !important;
-            }
-            .datos-form {
-                height: 65vh !important;
-            }
-        }
-    }
-    .icon-header img {
-        max-width: 120px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 14px !important;
-    }
-    #filas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-        }
-    }
-    .icon-header img {
-        max-width: 120px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 14px !important;
-    }
-    #filas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-}
-
-/* =========== LANDSCAPE ===========  */
-
-@media screen and (max-width: 1024px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-        }
-    }
-    .icon-header img {
-        max-width: 140px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 14px !important;
-    }
-    #filas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    .reload {
-        font-size: 32px;
-    }
-}
-
-/* =========== TABLET PORTRAIT ===========  */
-
-@media screen and (max-width: 768px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-            .input {
-                margin: 15px 0 !important;
-            }
-        }
-    }
-    .icon-header img {
-        max-width: 140px !important;
-    }
-    #NombreJugador {
-        width: 300px !important;
-        font-size: 18px !important;
-    }
-    #filas {
-        width: 150px !important;
-        font-size: 14px !important;
-        margin: 0 auto !important;
-    }
-    #columnas {
-        font-size: 14px !important;
-        margin: 0 auto !important;
-        width: 150px !important;
-    }
-}
-
-@media screen and (max-width: 720px) {
-    .container {
-        justify-content: center !important;
-        .container-datos .datos-form {
-            height: 50vh !important;
-            justify-content: center !important;
-        }
-    }
-    .icon-header img {
-        max-width: 140px !important;
-    }
-    #NombreJugador {
-        width: 400px !important;
-        font-size: 24px !important;
-        margin: 0 auto;
-    }
-    #filas {
-        font-size: 24px !important;
-        margin: 0 auto !important;
-    }
-    #columnas {
-        font-size: 24px !important;
-        margin: 0 auto !important;
-    }
-    .reload {
-        top: 5%;
-        right: 10%;
-        font-size: 32px;
-    }
-}
-
-/* =========== PHONE ===========  */
-
-@media screen and (device-width: 480px) {
-    .container {
-        justify-content: center !important;
-        .icon-header {
-            width: 95% !important;
-            img {
-                max-width: 100px !important;
-                margin: 0 20px !important;
-            }
-        }
-        .container-datos {
-            .datos-form {
-                height: 50vh !important;
-                justify-content: flex-end !important;
-            }
+        #contenedorDatos {
             .title {
-                width: 100% !important;
-                font-size: 32px !important;
+                font-size: 50px;
             }
-        }
-    }
-    #NombreJugador {
-        width: 300px !important;
-        margin: 0 auto;
-        font-size: 16px !important;
-        letter-spacing: 3px !important;
-    }
-    #filas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    #columnas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    .submarcado {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin: 0px 15px;
-    }
-    #puntaje {
-        font-size: 40px;
-    }
-    .reload {
-        font-size: 24px;
-    }
-}
-
-@media screen and (device-width: 360px) {
-    .container {
-        justify-content: space-around !important;
-        .icon-header {
-            width: 95% !important;
-        }
-        .container-datos {
             .datos-form {
-                height: 60vh !important;
-                justify-content: center !important;
-                flex-flow: column nowrap;
-                .input {
-                    margin: 10px auto !important;
+                input {
+                    font-size: 40px;
                 }
             }
-            .title {
-                width: 100% !important;
-                font-size: 24px !important;
-                height: 15vh !important;
+        }
+        #contenedorJuego {
+            .marcador {  
+                .neon-svg {
+                    width: inherit;
+                    height: inherit;
+                }
+                #puntaje {
+                    font-size: 40px;
+                }
             }
-            #NombreJugador {
-                width: 180px !important;
-                margin: 0 auto;
-                font-size: 12px !important;
-                letter-spacing: 3px !important;
+            #regresar {
+                #reload {
+                    font-size: 40px; 
+                }
             }
         }
     }
-    .icon-header img {
-        max-width: 70px !important;
-        margin: 0 20px !important;
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        #contenedorDatos {
+            .icon-header,
+            .title,
+            .datos-form {
+                margin: 0;
+            }
+            .title {
+                font-size: 50px;
+            }
+            .datos-form {
+                input {
+                    font-size: 25px;
+                }
+                #NombreJugador {
+                    width: 70%;
+                }
+                #filas,
+                #columnas {
+                    width: 50%;
+                }
+            }
+        }
+        #contenedorJuego {
+            .marcador,
+            #regresar,
+            #contenedor {
+                margin: 1.5% 0;
+            }
+            .marcador {
+                .shapeshifter {
+                    .neon-svg {
+                        width: inherit;
+                        height: inherit;
+                    }
+                }
+                #puntaje {
+                    font-size: 40px;
+                    margin: 0 40px;
+                }
+            }
+            #regresar {
+                #reload {
+                    font-size: 40px;
+                }
+            } 
+        }
     }
-    #filas {
-        font-size: 12px !important;
-        width: 150px !important;
+}
+
+@keyframes play60 {
+    0% {
+        background-position: 0px 0px;
     }
-    #columnas {
-        font-size: 12px !important;
-        width: 150px !important;
-    }
-    .marcador .submarcado {
-        margin: 0px 5px;
-    }
-    #puntaje {
-        font-size: 32px;
-    }
-    .reload {
-        font-size: 20px;
+    100% {
+        background-position: -6000px 0px;
     }
 }
 

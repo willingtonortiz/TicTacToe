@@ -198,7 +198,7 @@ class Tablero {
         let contenedor = document.getElementById(idContenedor);
         contenedor.innerHTML = "";
         let tabla = document.createElement('table');
-
+        tabla.setAttribute('id', 'tabla');
         for (let i = 0; i < this.filas; ++i) {
             let fila = document.createElement('tr');
             for (let j = 0; j < this.columnas; ++j) {
@@ -214,7 +214,33 @@ class Tablero {
             tabla.appendChild(fila);
         }
         contenedor.appendChild(tabla);
+        this.modificarDimensiones();
         return this;
+    }
+
+    private modificarDimensiones(): void {
+        let anchoTotal: number = window.innerWidth;
+        let tabla = document.getElementById('tabla').getBoundingClientRect();
+        let altoTotal: number = 2 * document.body.scrollHeight - tabla.top;
+
+        anchoTotal = (anchoTotal - 25) / this.columnas;
+        altoTotal = (altoTotal - 25) / this.filas;
+
+        let dimension: number;
+        if (anchoTotal <= altoTotal) {
+            dimension = anchoTotal;
+        }
+        else {
+            dimension = altoTotal;
+        }
+
+        let celdas: any = document.getElementsByTagName('td');
+        for (let i = 0; i < celdas.length; ++i) {
+            celdas[i].style.height = dimension + 'px';
+            celdas[i].style.width = dimension + 'px';
+            celdas[i].style.fontSize = (dimension - 10) + 'px';
+            celdas[i].style.lineHeight = .8;
+        }
     }
 
     public obtenerCoordenada(celda: HTMLElement): Coordenada {
@@ -487,47 +513,38 @@ class Tablero {
 
 document.getElementById('botonJugar').addEventListener('click', () => {
     let juego = new Tablero('contenedor');
+    let contenedor = document.getElementById('contenedorDatos');
+    contenedor.classList.add('container-moveup');
 
-    let _tr = document.getElementsByTagName('tr');
-    let _td = document.getElementsByTagName('td');
-    let _svgAnimation = document.getElementsByClassName('svg-img');
-    let _svgNeon = document.getElementsByClassName('neon-svg');
-    let _reload = document.getElementsByClassName('reload')[0];
-    let _containerDatos = document.getElementsByClassName('container-datos')[0];
-    _containerDatos.classList.add('container-moveup');
-    _svgAnimation[0].setAttribute("class", "shapeshifter svg-img play");
-    _svgAnimation[1].setAttribute("class", "shapeshifter svg-img play");
+    let animaciones = document.getElementsByClassName('svg-img');
+    animaciones[0].setAttribute("class", "shapeshifter svg-img play");
+    animaciones[1].setAttribute("class", "shapeshifter svg-img play");
 
-    for (let q = 0; q < _svgNeon.length; q++) {
-        _svgNeon[q].classList.add('neonAnimate');
+    let imagenes = document.getElementsByClassName('neon-svg');
+    for (let i = 0; i < imagenes.length; i++) {
+        imagenes[i].classList.add('neonAnimate');
     }
 
-    if (_tr.length > 2 && _tr.length < 100) {
-        for (let i = 0; i < _td.length; i++) {
-            _td[i].style.height = "50px";
-            _td[i].style.width = "50px";
-            _td[i].style.fontSize = "36px";
-        }
-    }
-    if (_tr.length > 9 && _tr.length < 16) {
-        for (let i = 0; i < _td.length; i++) {
-            _td[i].style.height = "30px";
-            _td[i].style.width = "30px";
-            _td[i].style.fontSize = "18px";
-        }
-    }
+    let recargar = document.getElementById('reload');
+    recargar.classList.add('reload-animation');
 
-    _reload.classList.add('reload-animation');
+    let puntaje = document.getElementById('puntaje');
+    puntaje.innerText = '0-0';
+});
 
-    // FUNCION DEL RESET DEL JUEGO
-    _reload.addEventListener('click', f => {
-        _reload.classList.remove('reload-animation');
-        _containerDatos.classList.remove('container-moveup');
-        _svgAnimation[0].setAttribute("class", "shapeshifter svg-img");
-        _svgAnimation[1].setAttribute("class", "shapeshifter svg-img");
-        for (let q = 0; q < _svgNeon.length; q++) {
-            _svgNeon[q].classList.remove('neonAnimate');
-        }
-    })
-    document.getElementById('puntaje').innerText = '0-0';
+document.getElementById('reload').addEventListener('click', f => {
+    let recargar = document.getElementById('reload');
+    recargar.classList.remove('reload-animation');
+
+    let contenedor = document.getElementById('contenedorDatos');
+    contenedor.classList.remove('container-moveup');
+
+    let animaciones = document.getElementsByClassName('svg-img');
+    animaciones[0].setAttribute("class", "shapeshifter svg-img");
+    animaciones[1].setAttribute("class", "shapeshifter svg-img");
+
+    let imagenes = document.getElementsByClassName('neon-svg');
+    for (let i = 0; i < imagenes.length; i++) {
+        imagenes[i].classList.remove('neonAnimate');
+    }
 });
