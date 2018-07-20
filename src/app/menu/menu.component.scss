@@ -1,0 +1,105 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+	src: url(../../assets/Fuentes/Beon.otf);
+	font-family: mySpace;
+	font-weight: 100;
+}
+
+.menuMenu {
+	margin: 50px 0;
+	ul li {
+		font-family: mySpace;
+		text-align: left;
+		list-style: none;
+		font-size: 24px;
+		color: #eee;
+        margin: 20px 0;
+		transition: all .2s ease-in;
+		cursor: pointer;
+		&:hover {
+			color: #21c1a9;
+		}
+		i {
+			margin: 0 15px;
+		}
+	}
+	#Jugar {
+		text-decoration: none;
+		color: inherit;
+	}
+}
+
+.menuContenedor {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient( rgba(0, 0, 0, 1), rgba(26, 22, 53, 0.9));
+	h1,
+	p {
+		text-align: center;
+	}
+	h1 {
+		margin: 70px 0 20px 0;
+		font-family: mySpace;
+		font-size: 32px;
+	}
+	p {
+		font-family: 'Quicksand', sans-serif;
+		color: #eee;
+		font-size: 16px;
+        margin: 10px;
+        word-break: break-all;
+	}
+}
+
+.mostrarContenedor {
+	z-index: 1;
+}
+
+.instrucciones {
+	h1 {
+		color: #21c1a9;
+		text-shadow: 0 0 15px #21c1a9;
+	}
+}
+
+.desarrolladores {
+	h1 {
+		color: #c12139;
+		text-shadow: 0 0 15px #c12139;
+	}
+}
+
+.agradecimientos {
+	h1 {
+		color: #aa21c1;
+		text-shadow: 0 0 15px #aa21c1;
+	}
+	p {
+		padding: 20px 0;
+	}
+}
+
+.cerrar {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	transform: translate(-5%, -5%);
+	font-family: mySpace;
+	font-size: 50px;
+	transition: all .2s ease-in-out;
+	color: #eee;
+	cursor: pointer;
+	&:hover {
+		color: #c12139;
+		text-shadow: 0 0 10px #c12139;
+	}
+}
