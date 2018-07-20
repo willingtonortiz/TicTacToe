@@ -64,9 +64,7 @@ export class Ia extends Jugador {
                    break;
            }
            else if (Tablero[y + dy][x + dx].Simbolo == '') {
-               console.log('Turno de bot');
-               document.getElementsByClassName('neon-svg')[0].classList.add('turnoHumano');
-               document.getElementsByClassName('neon-svg')[1].classList.remove('turnoAI');
+               console.log('Turno de bot')
                prioridad = this.ContarCadena(x + dx, y + dy, dx * -1, dy * -1, jugada.Simbolo, Tablero);
                if (salto && y + 2 * dy < Tablero.length && y + 2 * dy >= 0 && x + 2 * dx >= 0 && x + 2 * dx < Tablero[0].length && Tablero[y + 2 * dy][x + 2 * dx].Simbolo == jugada.Simbolo) {
                    prioridad++;
