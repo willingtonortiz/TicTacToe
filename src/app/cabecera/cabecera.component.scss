@@ -24,7 +24,7 @@
 	img {
 		max-width: 100px;
 		&:nth-child(2n) {
-			margin: 0 25px;
+			margin: 0 40px;
 		}
 	}
 }
@@ -47,3 +47,55 @@
 		text-shadow: 0 0 10px #c12139;
 	}
 }
+//////////////////////////////////////////////////////////////////
+//																//
+//    * NO TOCAR LAS MEDIA QUERIES POR FAVOR					//
+//	  * ME LLEGA AL PINCHO SI ESTA EN DESORDEN , NO TOCAR       //
+//																//
+//////////////////////////////////////////////////////////////////
+
+
+
+
+
+@media screen and ( max-width:1920px){
+	.cabeceraIconos{
+		height: 25vh ;
+		width: 600px;
+		img{
+			max-width: 200px;
+		}
+	}
+	#cabeceraTitulo{
+		height: 15vh;
+		font-size: 48px;
+	}
+}
+
+@media screen and ( max-width:1366px){
+	.cabeceraIconos{
+		height: 25vh ;
+		width: 600px;
+		img{
+			max-width: 120px;
+		}
+	}
+	#cabeceraTitulo{
+		height: 15vh;
+		font-size: 32px;
+	}
+}
+@media screen and ( max-width:480px){
+	.cabeceraIconos{
+		height: 25vh ;
+		width: 400px;
+		img{
+			max-width: 80px;
+		}
+	}
+	#cabeceraTitulo{
+		height: 15vh;
+		font-size: 24px;
+	}
+}
+

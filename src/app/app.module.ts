@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule} from '@angular/core'
+
 
 //esto es nuevo
 import { routes } from './app.router';
