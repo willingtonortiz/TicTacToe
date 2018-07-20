@@ -1,0 +1,49 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+	src: url(../../assets/Fuentes/Beon.otf);
+	font-family: mySpace;
+	font-weight: 100;
+}
+
+.cabeceraIconos,
+#cabeceraTitulo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.cabeceraIconos {
+	margin: 15px 0;
+	justify-content: center;
+	align-items: center;
+	img {
+		max-width: 100px;
+		&:nth-child(2n) {
+			margin: 0 25px;
+		}
+	}
+}
+
+#cabeceraTitulo {
+	justify-content: center;
+	font-family: mySpace;
+	font-size: 25px;
+	font-weight: 100;
+	#tic {
+		color: #aa21c1;
+		text-shadow: 0 0 100px #aa21c1;
+	}
+	#tac {
+		color: #21c1a9;
+		text-shadow: 0 0 10px #21c1a9;
+	}
+	#toe {
+		color: #c12139;
+		text-shadow: 0 0 10px #c12139;
+	}
+}

@@ -1,0 +1,308 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+	font-family: mySpace;
+	src: url(../../assets/Fuentes/Beon.otf);
+	font-weight: 100;
+}
+
+#contenedorDatos {
+	margin: 20px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 0.8s ease-in-out;
+	.datos-form {
+		margin: 3% 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		input {
+			padding: 10px 25px;
+			border-radius: 15px;
+			background: rgba(255, 255, 255, 0.02);
+			font-family: mySpace;
+			text-align: center;
+			background: transparent;
+			margin: 15px 0;
+			font-size: 18px;
+			&:focus {
+				outline: none;
+			}
+		}
+		#filas,
+		#columnas,
+		#NombreJugador {
+			width: 70%;
+		}
+		#NombreJugador {
+			border: 1px solid #eee;
+			color: #eee;
+			letter-spacing: 5px;
+		}
+		#filas {
+			border: 1px solid #21c1a9;
+			color: #21c1a9;
+		}
+		#columnas {
+			border: 1px solid #aa21c1;
+			color: #aa21c1;
+		}
+		#botonJugar {
+			width: 50%;
+			background: #1f3e84;
+			border: none;
+			font-weight: 700;
+			letter-spacing: 1px;
+			color: #eee;
+			font-family: "Quicksand", sans-serif;
+			cursor: pointer;
+			&:active {
+				transform: scale(0.95);
+			}
+		}
+	}
+}
+
+#contenedorJuego {
+	display: flex;
+    flex-direction: column;
+    position: relative;
+	.marcador,
+	#contenedor {
+        display: flex;
+        justify-content: center;
+	}
+	.marcador {
+		flex-direction: row;
+        align-items: center;
+        margin: 20px;
+		#puntaje {
+			color: #ff1c3e;
+			font-family: mySpace;
+			text-shadow: 0 0 10px #ff1c3e;
+			font-size: 30px;
+			text-align: center;
+			margin: 0 15px;
+		}
+	}
+	#reload {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 5%;
+        width: 50px;
+        height: 50px;
+        font-size: 42px;
+		color: #eee;
+		transition: all .5s ease-in-out;
+		z-index: -1;
+		opacity: 0;
+		cursor: pointer;
+		&:hover {
+			transform: rotate(270deg);
+			text-shadow: 0 0 10px #eee;
+		}
+	}
+	::ng-deep #contenedor {
+		height: 100%;
+		table {
+			border-collapse: collapse;
+			&,
+			tr,
+			td {
+				border: 1px solid #aaa;
+			}
+			tr,
+			td {
+				font-family: mySpace;
+				text-align: center;
+				color: #306cf7;
+			}
+		}
+	}
+	display: none;
+}
+
+.neonAnimate {
+	animation: neonAI 6s linear;
+}
+
+.reload-animation {
+	z-index: 1 !important;
+	opacity: 1 !important;
+	animation: reload-giro 1.5s ease-in-out;
+}
+
+::ng-deep .ColorRojo,
+::ng-deep .ColorRojoMarcado {
+	color: #ff1c3e !important;
+}
+
+::ng-deep .ColorRojoMarcado {
+	text-shadow: 0 0 10px white !important;
+}
+
+::ng-deep .ColorAzul,
+::ng-deep .ColorAzulMarcado {
+	color: #21c1a9 !important;
+}
+
+::ng-deep .ColorAzulMarcado {
+	text-shadow: 0 0 10px white !important;
+}
+
+// .shapeshifter {
+// 	animation-duration: 1000ms;
+// 	animation-timing-function: steps(60);
+// 	animation-fill-mode: forwards;
+// 	animation-delay: 1s;
+// 	background-repeat: no-repeat;
+// 	background-size: cover;
+// }
+// .shapeshifter.play {
+// 	animation-name: play60;
+// }
+@media screen and (min-width: 768px) {
+	.container {
+		#contenedorDatos {
+			.title {
+				font-size: 50px;
+			}
+			.datos-form {
+				input {
+					font-size: 40px;
+				}
+			}
+		}
+		#contenedorJuego {
+			.marcador {
+				.neon-svg {
+					width: inherit;
+					height: inherit;
+				}
+				#puntaje {
+					font-size: 40px;
+				}
+			}
+			#regresar {
+				#reload {
+					font-size: 40px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.container {
+		#contenedorDatos {
+			.icon-header,
+			.title,
+			.datos-form {
+				margin: 0;
+			}
+			.title {
+				font-size: 50px;
+			}
+			.datos-form {
+				input {
+					font-size: 25px;
+				}
+				#NombreJugador {
+					width: 70%;
+				}
+				#filas,
+				#columnas {
+					width: 50%;
+				}
+			}
+		}
+		#contenedorJuego {
+			.marcador,
+			#regresar,
+			#contenedor {
+				margin: 1.5% 0;
+			}
+			.marcador {
+				.shapeshifter {
+					.neon-svg {
+						width: inherit;
+						height: inherit;
+					}
+				}
+				#puntaje {
+					font-size: 40px;
+					margin: 0 40px;
+				}
+			}
+			#regresar {
+				#reload {
+					font-size: 40px;
+				}
+			}
+		}
+	}
+}
+
+@keyframes play60 {
+	0% {
+		background-position: 0px 0px;
+	}
+	100% {
+		background-position: -6000px 0px;
+	}
+}
+
+@keyframes neonAI {
+	0% {
+		opacity: 0;
+	}
+	51% {
+		opacity: 0;
+	}
+	52% {
+		opacity: 0;
+	}
+	53% {
+		opacity: 0.5;
+	}
+	54% {
+		opacity: 0.9;
+	}
+	55% {
+		opacity: 1;
+	}
+	56% {
+		opacity: 0;
+	}
+	57% {
+		opacity: 1;
+	}
+	59% {
+		opacity: 0.2;
+	}
+	60% {
+		opacity: 2;
+	}
+}
+
+@keyframes reload-giro {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(360deg);
+	}
+	75% {
+		transform: rotate(410deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
