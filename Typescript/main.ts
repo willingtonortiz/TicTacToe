@@ -242,7 +242,7 @@ class Tablero {
     private maquina: CIA;
     private turnosRestantes: number;
     private turnoTerminado: boolean;
-
+    private NRondas:number;
 
     constructor(idContenedor: string) {
         if (this.validarYObtenerNumeros()) {
@@ -250,6 +250,8 @@ class Tablero {
             this.inicializarTabla(idContenedor);
             this.turno = 'j1';
             let nombreJugador: string = (<HTMLInputElement>document.getElementById('NombreJugador')).value;
+            this.NRondas=parseInt((<HTMLInputElement>document.getElementById('rondas')).value);
+            this.NRondas--;
             this.j1 = new Jugador(nombreJugador, 'X');
             this.maquina = new CIA('Ultron', 'O');
             this.turnosRestantes = this.filas * this.columnas;
@@ -330,10 +332,16 @@ class Tablero {
         return document.getElementById(`${coordenada.Y}-${coordenada.X}`);
     }
 
-    public actualizarTableroVisual(): void {
+    public actualizarTableroVisual(nuevaRonda:boolean=false): void {
         let celdas: HTMLCollectionOf<Element> = document.getElementsByClassName('celda');
         for (let i: number = 0; i < celdas.length; ++i) {
             celdas[i].innerHTML = this.tablero[Math.floor(i / this.columnas)][i % this.columnas].Simbolo;
+            if(nuevaRonda){
+                celdas[i].classList.remove('ColorAzul');
+                celdas[i].classList.remove('ColorRojo');
+                celdas[i].classList.remove('ColorRojoMarcado');
+                celdas[i].classList.remove('ColorAzulMarcado');
+            }
         }
     }
 
@@ -568,6 +576,17 @@ class Tablero {
                 //Jugada de la maquina
                 this.maquina.jugarIA2(this.tablero);
                 this.turnosRestantes--;
+            }
+            else
+            if(this.NRondas>0 ){
+                //Mensaje de quien gano la ronda actual
+                //Funcion para saber quien gana
+                //Se reinicia la matriz 
+                this.inicializarMatriz();
+                this.actualizarTableroVisual(true);
+                this.NRondas--;
+                this.turnosRestantes=this.filas*this.columnas;
+
             }
             this.actualizarTableroVisual();
             this.contarPuntajes();
