@@ -16,10 +16,31 @@
 	font-size: 16px;
 	p {
 		text-align: center;
-		background: linear-gradient( 90deg, #21c1a9, #aa21c1, #c12139);
+		background: linear-gradient( 90deg, #21c1a9 40%, #aa21c1, #c12139);
 		background-clip: text;
 		-moz-background-clip: text;
 		-webkit-background-clip: text;
 		color: transparent;
+	}
+}
+
+//////////////////////////////////////////////////////////////////
+//																//
+//    * NO TOCAR LAS MEDIA QUERIES POR FAVOR					//
+//	  * ME LLEGA AL PINCHO SI ESTA EN DESORDEN , NO TOCAR       //
+//																//
+//////////////////////////////////////////////////////////////////
+
+@media screen and (max-width:1920px){
+	.copyright{
+		height: 25vh;
+		font-size: 36px;
+	}
+}
+
+@media screen and (max-width:1366px){
+	.copyright{
+		height: 25vh;
+		font-size: 16px;
 	}
 }

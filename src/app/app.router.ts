@@ -1,5 +1,8 @@
-import { ModuleWithProviders } from "@angular/core";
-import { Routes, RouterModule, Router } from "@angular/router";
+
+
+import {ModuleWithProviders} from '@angular/core';
+import { Routes,RouterModule, Router} from '@angular/router'
+
 
 import { AppComponent } from "./app.component";
 import { PantallaInicioComponent } from "./pantalla-inicio/pantalla-inicio.component";

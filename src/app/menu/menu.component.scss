@@ -12,11 +12,13 @@
 
 .menuMenu {
 	margin: 50px 0;
+	display: flex;
+	justify-content: center;
 	ul li {
 		font-family: mySpace;
 		text-align: left;
 		list-style: none;
-		font-size: 24px;
+		font-size: 30px;
 		color: #eee;
         margin: 20px 0;
 		transition: all .2s ease-in;
@@ -32,6 +34,7 @@
 		text-decoration: none;
 		color: inherit;
 	}
+	
 }
 
 .menuContenedor {
@@ -39,6 +42,10 @@
 	top: 0;
 	left: 0;
 	z-index: -1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: column nowrap;
 	width: 100%;
 	height: 100%;
 	background: radial-gradient( rgba(0, 0, 0, 1), rgba(26, 22, 53, 0.9));
@@ -101,5 +108,34 @@
 	&:hover {
 		color: #c12139;
 		text-shadow: 0 0 10px #c12139;
+	}
+}
+
+//////////////////////////////////////////////////////////////////
+//																//
+//    * NO TOCAR LAS MEDIA QUERIES POR FAVOR					//
+//	  * ME LLEGA AL PINCHO SI ESTA EN DESORDEN , NO TOCAR       //
+//																//
+//////////////////////////////////////////////////////////////////
+
+@media screen and (max-width:1920px){
+	.menuMenu{
+		height: 25vh;
+	}
+}
+
+@media screen and (max-width:1366px){
+	.menuMenu{
+		height: 25vh;
+		ul li{
+			font-size: 20px;
+		}
+	}
+}
+@media screen and ( max-width:480px){
+	.menuMenu{
+		ul li{
+			font-size: 16px;
+		}
 	}
 }
