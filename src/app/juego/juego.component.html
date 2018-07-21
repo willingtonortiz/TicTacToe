@@ -3,17 +3,18 @@
 
 <div id="contenedorDatos">
 	<form class="datos-form">
-		<input id="NombreJugador" type="text" placeholder="Nombre">
-		<input id="rondas" type="text" placeholder="Rondas">
-		<input id="filas" type="text" placeholder="Filas">
-		<input id="columnas" type="text" placeholder="Columnas">
-		<input id="botonJugar" type="button" value="Jugar">
+		<input id="juegoNombreJugador" type="text" placeholder="Nombre">
+		<input id="juegoRondas" type="text" placeholder="Rondas">
+		<input id="juegoFilas" type="text" placeholder="Filas">
+		<input id="juegoColumnas" type="text" placeholder="Columnas">
+		<input id="juegoBotonJugar" type="button" value="Jugar">
 	</form>
 </div>
 
 <div id="contenedorJuego">
-	<div class="marcador">
-		<div id="puntaje" class="barra submarcado"></div>
+	<div class="juegoMarcador">
+		<div id="juegoPuntajeRonda"></div>
+		<div id="juegoPuntajeJuego"></div>
 	</div>
 
 	<p id="reload">
@@ -22,4 +23,9 @@
 
 	<div id="contenedor">
 	</div>
+</div>
+
+<div class="juegoContenedor">
+	<h1 id="juegoMensaje"></h1>
+	<span class="juegoCerrar"></span>
 </div>

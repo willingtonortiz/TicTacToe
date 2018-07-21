@@ -5,21 +5,19 @@ import { Ia } from "./ia";
 export class Tablero {
     private filas: number;
     private columnas: number;
-    private tablero: Array<Array<Coordenada>>
-    private turno: string;
+    private tablero: Array<Array<Coordenada>>;
     private j1: Jugador;
     private maquina: Ia;
     private turnosRestantes: number;
     private turnoTerminado: boolean;
-    private nRondas:number;
+    private nRondas: number;
 
     constructor(idContenedor: string) {
         if (this.validarYObtenerNumeros()) {
             this.inicializarMatriz();
             this.inicializarTabla(idContenedor);
-            this.turno = 'j1';
-            let nombreJugador: string = (<HTMLInputElement>document.getElementById('NombreJugador')).value;
-            this.nRondas=parseInt((<HTMLInputElement>document.getElementById('rondas')).value);
+            let nombreJugador: string = (<HTMLInputElement>document.getElementById('juegoNombreJugador')).value;
+            this.nRondas = parseInt((<HTMLInputElement>document.getElementById('juegoRondas')).value);
             this.nRondas--;
             this.j1 = new Jugador(nombreJugador, 'X');
             this.maquina = new Ia('Ultron', 'O');
@@ -29,6 +27,7 @@ export class Tablero {
         return this;
     }
 
+    // Crea el tablero de coordenadas del juego
     private inicializarMatriz(): Tablero {
         this.tablero = null;
         this.tablero = new Array(this.filas);
@@ -41,6 +40,7 @@ export class Tablero {
         return this;
     }
 
+    // Crea el tablero visual del juego
     private inicializarTabla(idContenedor: string): Tablero {
         let contenedor = document.getElementById(idContenedor);
         contenedor.innerHTML = "";
@@ -65,6 +65,7 @@ export class Tablero {
         return this;
     }
 
+    // Modifica y ajusta las dimensiones del tablero a la pantalla
     private modificarDimensiones(): void {
         let anchoTotal: number = window.innerWidth;
         let tabla = document.getElementById('tabla').getBoundingClientRect();
@@ -90,6 +91,7 @@ export class Tablero {
         }
     }
 
+    // Obtiene una coordenada a partir de una celda visual
     public obtenerCoordenada(celda: HTMLElement): Coordenada {
         let cadena: Array<string> = celda.getAttribute('id').split('-');
         let fila: number = parseInt(cadena[0]);
@@ -97,15 +99,18 @@ export class Tablero {
         return this.tablero[fila][columna];
     }
 
+    // Obtiene una celda visual a partir de una coordenada
     public obtenerCelda(coordenada: Coordenada): HTMLElement {
         return document.getElementById(`${coordenada.Y}-${coordenada.X}`);
     }
 
-    public actualizarTableroVisual(nuevaRonda:boolean=false): void {
+    // Actualiza el tablero visual, sincronizandolo con el tablero de coordenadas
+    // Si hay una nueva ronda, lo limpia
+    public actualizarTableroVisual(nuevaRonda: boolean = false): void {
         let celdas: HTMLCollectionOf<Element> = document.getElementsByClassName('celda');
         for (let i: number = 0; i < celdas.length; ++i) {
             celdas[i].innerHTML = this.tablero[Math.floor(i / this.columnas)][i % this.columnas].Simbolo;
-            if(nuevaRonda){
+            if (nuevaRonda) {
                 celdas[i].classList.remove('ColorAzul');
                 celdas[i].classList.remove('ColorRojo');
                 celdas[i].classList.remove('ColorRojoMarcado');
@@ -114,7 +119,8 @@ export class Tablero {
         }
     }
 
-    public contarPuntajes(): Tablero {
+    // Cuenta los puntajes del tablero de coordenadas
+    public contarPuntajesJuego(): Array<Jugador> {
         let puntaje1: number = 0, contador1: number = 0;
         let puntaje2: number = 0, contador2: number = 0;
         let Marcados1: Array<Coordenada>, Marcados2: Array<Coordenada>;
@@ -254,10 +260,47 @@ export class Tablero {
             else inicio2++;
             contador1 = contador2 = 0;
         }
-        this.actualizarPuntajes(puntaje1, puntaje2);
+        this.j1.Puntaje = puntaje1;
+        this.maquina.Puntaje = puntaje2;
+        return [this.j1, this.maquina];
+    }
+
+    private async determinarGanadorRonda(juegoTerminado: boolean = false) {
+        let puntajes: Array<Jugador> = this.contarPuntajesJuego();
+        let mensaje: string;
+
+        if (puntajes[0].Puntaje > puntajes[1].Puntaje) {
+            puntajes[0].RondasGanadas++;
+            mensaje = `Ganaste la ronda!`;
+        }
+        else if (puntajes[0].Puntaje == puntajes[1].Puntaje) {
+            mensaje = "Empate";
+            puntajes[0].RondasGanadas++;
+            puntajes[1].RondasGanadas++;
+        }
+        else {
+            mensaje = "Perdiste la ronda!";
+            puntajes[1].RondasGanadas++;
+        }
+        this.actualizarPuntajesRonda(puntajes);
+        if (juegoTerminado) {
+            if (puntajes[0].RondasGanadas > puntajes[1].RondasGanadas) {
+                mensaje = `Felicidades ${this.j1.Nombre}`;
+            }
+            else if (puntajes[0].RondasGanadas == puntajes[1].RondasGanadas) {
+                mensaje = "Empate";
+            }
+            else {
+                mensaje = "Perdiste el juego!";
+            }
+        }
+        this.mostrarMensaje(mensaje);
+        await this.sleep(2500);
+        this.cerrarMensaje(juegoTerminado);
         return this;
     }
 
+    // Marca los 3 en raya del tablero visual a partir del tablero de coordenadas
     private marcarTresEnRaya(coordenadas: Array<Coordenada>, simbolo: string): Tablero {
         if (simbolo === 'X') {
             for (let i = 0; i < coordenadas.length; i++) {
@@ -277,18 +320,43 @@ export class Tablero {
         return this;
     }
 
-    private actualizarPuntajes(puntaje1: number, puntaje2: number): Tablero {
-        document.getElementById('puntaje').innerText = `${puntaje1}-${puntaje2}`;
+    // Actualiza los puntajes de rondas y del juego
+    private actualizarPuntajesJuego(): Tablero {
+        let puntajes: Array<Jugador> = this.contarPuntajesJuego();
+        document.getElementById('juegoPuntajeJuego').innerText = `Juego: ${puntajes[0].Puntaje}-${puntajes[1].Puntaje}`;
         return this;
     }
 
+    private actualizarPuntajesRonda(puntajes: Array<Jugador>): Tablero {
+        document.getElementById('juegoPuntajeRonda').innerText = `Rondas: ${puntajes[0].RondasGanadas}-${puntajes[1].RondasGanadas}`;
+        return this;
+    }
+
+    // Muestra un mensaje en la pantalla
+    private mostrarMensaje(mensaje: string): Tablero {
+        let contenedor: HTMLElement = (<HTMLElement>document.getElementsByClassName('juegoContenedor')[0]);
+        let mensajeContenedor: HTMLElement = document.getElementById('juegoMensaje');
+        contenedor.style.display = 'flex';
+        mensajeContenedor.innerText = mensaje;
+        return this;
+    }
+
+    private cerrarMensaje(juegoTerminado: boolean = false) {
+        (<HTMLElement>document.getElementsByClassName('juegoCerrar')[0]).click();
+        if (juegoTerminado) {
+            document.getElementById('reload').click();
+        }
+    }
+
+    // Detiene el programa con una cantidad de tiempo especifico
     private sleep(tiempo: number): Promise<any> {
         return new Promise<any>((resolve: any) => setTimeout(resolve, tiempo));
     }
 
+    // Valida que los inputs sean correctos
     private validarYObtenerNumeros(): boolean {
-        let filas: number = parseInt((<HTMLInputElement>document.getElementById('filas')).value);
-        let columnas: number = parseInt((<HTMLInputElement>document.getElementById('columnas')).value);
+        let filas: number = parseInt((<HTMLInputElement>document.getElementById('juegoFilas')).value);
+        let columnas: number = parseInt((<HTMLInputElement>document.getElementById('juegoColumnas')).value);
         let onlyNumbers: RegExp = /^([0-9])*$/; //es una expresion regular
 
         //si no es un numero ej filas = a || columnas = c
@@ -322,11 +390,17 @@ export class Tablero {
         return true;
     }
 
+    // Verifica si una celda está vacía
     private esCeldaVacia(celda: HTMLTableCellElement): boolean {
         return celda.innerText === '';
     }
 
-    async jugar(celda: HTMLTableCellElement) {
+    private esJuegoTerminado(): boolean {
+        return (this.nRondas === 0 && this.turnosRestantes === 0);
+    }
+
+    // Función que distribuye los juegos
+    private async jugar(celda: HTMLTableCellElement) {
         if (this.esCeldaVacia(celda) && this.turnoTerminado) {
             //Jugada del jugador
             celda.classList.add('ColorRojo');
@@ -334,34 +408,38 @@ export class Tablero {
             coordenada.Simbolo = this.j1.Simbolo;
             this.turnosRestantes--;
             this.actualizarTableroVisual();
-            this.contarPuntajes();
+            this.actualizarPuntajesJuego();
+
+            //Espera un segundo aproximadamente
             this.turnoTerminado = false;
-            //Espera un segundo
             let tiempo: number = Math.round(Math.random() * 1000 + 500);
             await this.sleep(tiempo);
             this.turnoTerminado = true;
+
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.turnosRestantes !== 0) {
-                //Jugada de la maquina
+                // Si quedan turnos disponibles , juega la maquina
                 this.maquina.jugarIA2(this.tablero);
                 this.turnosRestantes--;
+                this.actualizarTableroVisual();
+                this.actualizarPuntajesJuego();
             }
-            else
-            if(this.nRondas>0 ){
-                //Mensaje de quien gano la ronda actual
-                //Funcion para saber quien gana
-                //Se reinicia la matriz 
+            if (this.turnosRestantes === 0 && this.nRondas !== 0) {
+                this.determinarGanadorRonda();
                 this.inicializarMatriz();
                 this.actualizarTableroVisual(true);
+                this.actualizarPuntajesJuego();
                 this.nRondas--;
-                this.turnosRestantes=this.filas*this.columnas;
-
+                console.log(this.nRondas);
+                this.turnosRestantes = this.filas * this.columnas;
             }
-            this.actualizarTableroVisual();
-            this.contarPuntajes();
+            if (this.esJuegoTerminado()) {
+                this.determinarGanadorRonda(true);
+            }
         }
     }
 
+    // Imprime el tablero de coordenadas en la consola para debugging
     public imprimirTableroConsola(): Tablero {
         let cadena: string = '';
         for (let i: number = 0; i < this.filas; ++i) {

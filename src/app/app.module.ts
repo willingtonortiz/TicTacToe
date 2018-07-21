@@ -9,7 +9,6 @@ import { CabeceraComponent } from './cabecera/cabecera.component';
 import { PieComponent } from './pie/pie.component';
 import { MenuComponent } from './menu/menu.component';
 import { JuegoComponent } from './juego/juego.component';
-import { FormJuegoComponent } from './form-juego/form-juego.component';
 import { PantallaInicioComponent } from './pantalla-inicio/pantalla-inicio.component';
 import { PantallaJuegoComponent } from './pantalla-juego/pantalla-juego.component';
 
@@ -20,7 +19,6 @@ import { PantallaJuegoComponent } from './pantalla-juego/pantalla-juego.componen
     PieComponent,
     MenuComponent,
     JuegoComponent,
-    FormJuegoComponent,
     PantallaInicioComponent,
     PantallaJuegoComponent
   ],

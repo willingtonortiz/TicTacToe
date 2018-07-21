@@ -8,11 +8,11 @@ import { Tablero } from "../clases/tablero";
 })
 
 export class JuegoComponent implements OnInit {
-
+    private variable: boolean = true;
     constructor() { }
 
     ngOnInit() {
-        document.getElementById('botonJugar').addEventListener('click', () => {
+        document.getElementById('juegoBotonJugar').addEventListener('click', () => {
             let contenedorDatos = document.getElementById('contenedorDatos');
             contenedorDatos.style.display = 'none';
 
@@ -25,10 +25,17 @@ export class JuegoComponent implements OnInit {
             let recargar = document.getElementById('reload');
             recargar.classList.add('reload-animation');
 
-            let puntaje = document.getElementById('puntaje');
-            puntaje.innerText = '0-0';
+            let puntajeJuego = document.getElementById('juegoPuntajeRonda');
+            puntajeJuego.innerText = 'Rondas: 0-0';
+
+            let puntajeRonda = document.getElementById('juegoPuntajeJuego');
+            puntajeRonda.innerText = 'Juego: 0-0';
 
             let juego = new Tablero('contenedor');
+        });
+
+        document.getElementsByClassName('juegoCerrar')[0].addEventListener('click', () => {
+            (<HTMLMapElement>document.getElementsByClassName('juegoContenedor')[0]).style.display = 'none';
         });
 
         document.getElementById('reload').addEventListener('click', f => {
