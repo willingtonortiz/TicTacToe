@@ -21,7 +21,8 @@ export class Tablero {
             this.nRondas--;
             this.j1 = new Jugador(nombreJugador, 'X');
             this.maquina = new Ia('Ultron', 'O');
-            this.turnosRestantes = this.filas * this.columnas;
+
+            this.turnosRestantes = this.filas * this.columnas - this.crearObstaculos(true);
             this.turnoTerminado = true;
         }
         return this;
@@ -409,7 +410,7 @@ export class Tablero {
             this.turnosRestantes--;
             this.actualizarTableroVisual();
             this.actualizarPuntajesJuego();
-
+            this.j1.Jugada = coordenada;
             //Espera un segundo aproximadamente
             this.turnoTerminado = false;
             let tiempo: number = Math.round(Math.random() * 1000 + 500);
@@ -419,26 +420,45 @@ export class Tablero {
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.turnosRestantes !== 0) {
                 // Si quedan turnos disponibles , juega la maquina
-                this.maquina.jugarIA2(this.tablero);
+                this.maquina.jugarIA(this.j1.Jugada, this.columnas, this.filas, this.tablero);
                 this.turnosRestantes--;
                 this.actualizarTableroVisual();
                 this.actualizarPuntajesJuego();
             }
             if (this.turnosRestantes === 0 && this.nRondas !== 0) {
+                await this.sleep(1000);
                 this.determinarGanadorRonda();
                 this.inicializarMatriz();
                 this.actualizarTableroVisual(true);
                 this.actualizarPuntajesJuego();
                 this.nRondas--;
                 console.log(this.nRondas);
-                this.turnosRestantes = this.filas * this.columnas;
+
+                this.turnosRestantes = this.filas * this.columnas - this.crearObstaculos(true);
+
             }
             if (this.esJuegoTerminado()) {
+                await this.sleep(1000);
                 this.determinarGanadorRonda(true);
             }
         }
     }
-
+    private crearObstaculos(crear: boolean = false) {
+        let cantidadObs: number = 0;
+        let celdas: number = this.filas * this.columnas;
+        if (crear) {
+            if (celdas < 10)
+                cantidadObs = 1;
+            else
+                cantidadObs = celdas/7;
+            this.maquina.Simbolo = '█';
+            for (let i: number = 0; i < cantidadObs; ++i)
+                this.maquina.JugadaRandom(this.tablero);
+            this.maquina.Simbolo = 'O';
+            this.actualizarTableroVisual();
+        }
+        return cantidadObs;
+    }
     // Imprime el tablero de coordenadas en la consola para debugging
     public imprimirTableroConsola(): Tablero {
         let cadena: string = '';

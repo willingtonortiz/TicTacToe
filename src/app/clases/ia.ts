@@ -9,8 +9,8 @@ export class Ia extends Jugador {
    }
    //Funcion booleana
    PensarJugada(jugada: Coordenada, limitex: number, limitey: number, Tablero: any) {
-       for (let y = jugada.Y - 2; y <= jugada.Y + 2; y++) {
-           for (let x = jugada.X - 2; x <= jugada.X + 2; x++) {
+       for (let y:number = jugada.Y - 2; y <= jugada.Y + 2; y++) {
+           for (let x:number = jugada.X - 2; x <= jugada.X + 2; x++) {
                if (y < 0 || y >= limitey) {
                    break;
                }
@@ -151,18 +151,20 @@ export class Ia extends Jugador {
    }
    //Funcion void
    jugarIA(jugada: any, limitex: number, limitey: number, Tablero: any) {
+       this.PosiblesJugadas = new Array(0);
        if (!this.PensarJugada(jugada, limitex, limitey, Tablero)) {
            if (this.jugada != null) {
                if (!this.PensarJugada(this.jugada, limitex, limitey, Tablero)) {
                    let jugadaNueva = new Coordenada(this.jugada.X, this.jugada.Y);
                    this.PensarJugada(jugadaNueva, limitex, limitey, Tablero);
                }
-           } else {
-               this.JugadaRandom(Tablero);
-           }
-       } else {
+           } 
+       } 
+       if (this.PosiblesJugadas.length == 0)
            this.JugadaRandom(Tablero);
-       }
+       else
+           //Se selecciona la jugada con  mayor prioridad
+           this.BuscarJugadaOptima(Tablero);
    }
    jugarIA2(Tablero:any) {
        this.PosiblesJugadas = new Array(0);
