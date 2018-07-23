@@ -426,7 +426,7 @@ export class Tablero {
                 this.actualizarPuntajesJuego();
             }
             if (this.turnosRestantes === 0 && this.nRondas !== 0) {
-                await this.sleep(1000);
+                await this.sleep(720);
                 this.determinarGanadorRonda();
                 this.inicializarMatriz();
                 this.actualizarTableroVisual(true);
@@ -438,7 +438,7 @@ export class Tablero {
 
             }
             if (this.esJuegoTerminado()) {
-                await this.sleep(1000);
+                await this.sleep(720);
                 this.determinarGanadorRonda(true);
             }
         }
