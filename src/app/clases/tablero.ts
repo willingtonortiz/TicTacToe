@@ -425,6 +425,7 @@ export class Tablero {
                 this.actualizarPuntajesJuego();
             }
             if (this.turnosRestantes === 0 && this.nRondas !== 0) {
+                await this.sleep(1000);
                 this.determinarGanadorRonda();
                 this.inicializarMatriz();
                 this.actualizarTableroVisual(true);
