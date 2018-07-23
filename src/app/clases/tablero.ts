@@ -420,7 +420,7 @@ export class Tablero {
             //Si ya se completo la tabla, la maquina no jugara (tablas impares)
             if (this.turnosRestantes !== 0) {
                 // Si quedan turnos disponibles , juega la maquina
-                this.maquina.jugarIA(this.j1.Jugada, this.columnas, this.filas, this.tablero);
+                this.maquina.jugarIA2( this.tablero);
                 this.turnosRestantes--;
                 this.actualizarTableroVisual();
                 this.actualizarPuntajesJuego();
