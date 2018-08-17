@@ -12,14 +12,13 @@ export class Tablero {
     private turnoTerminado: boolean;
     private nRondas: number;
 
-    constructor(idContenedor: string) {
-        if (this.validarYObtenerNumeros()) {
+    constructor(idContenedor: string, valores: any) {
+        if (this.validarYObtenerNumeros(valores.filas, valores.columnas)) {
             this.inicializarMatriz();
             this.inicializarTabla(idContenedor);
-            let nombreJugador: string = (<HTMLInputElement>document.getElementById('juegoNombreJugador')).value;
-            this.nRondas = parseInt((<HTMLInputElement>document.getElementById('juegoRondas')).value);
+            this.nRondas = valores.rondas;
             this.nRondas--;
-            this.j1 = new Jugador(nombreJugador, 'X');
+            this.j1 = new Jugador(valores.nombre, 'X');
             this.maquina = new Ia('Ultron', 'O');
 
             this.turnosRestantes = this.filas * this.columnas - this.crearObstaculos(true);
@@ -62,14 +61,14 @@ export class Tablero {
             tabla.appendChild(fila);
         }
         contenedor.appendChild(tabla);
-        this.modificarDimensiones();
+        this.modificarDimensiones(tabla);
         return this;
     }
 
     // Modifica y ajusta las dimensiones del tablero a la pantalla
-    private modificarDimensiones(): void {
+    private modificarDimensiones(ptabla: HTMLElement): void {
         let anchoTotal: number = window.innerWidth;
-        let tabla = document.getElementById('tabla').getBoundingClientRect();
+        let tabla: any = ptabla.getBoundingClientRect();
         let altoTotal: number = document.body.scrollHeight - tabla.top;
 
         anchoTotal = (anchoTotal - 25) / this.columnas;
@@ -83,7 +82,7 @@ export class Tablero {
             dimension = altoTotal;
         }
 
-        let celdas: any = document.getElementsByTagName('td');
+        let celdas: any = ptabla.getElementsByTagName('td');
         for (let i = 0; i < celdas.length; ++i) {
             celdas[i].style.height = dimension + 'px';
             celdas[i].style.width = dimension + 'px';
@@ -355,9 +354,9 @@ export class Tablero {
     }
 
     // Valida que los inputs sean correctos
-    private validarYObtenerNumeros(): boolean {
-        let filas: number = parseInt((<HTMLInputElement>document.getElementById('juegoFilas')).value);
-        let columnas: number = parseInt((<HTMLInputElement>document.getElementById('juegoColumnas')).value);
+    private validarYObtenerNumeros(pFilas: string, pColumnas: string): boolean {
+        let filas = Number(pFilas);
+        let columnas = Number(pColumnas);
         let onlyNumbers: RegExp = /^([0-9])*$/; //es una expresion regular
 
         //si no es un numero ej filas = a || columnas = c

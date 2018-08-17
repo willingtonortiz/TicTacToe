@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule} from '@angular/core'
-
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 
 //esto es nuevo
 import { routes } from './app.router';
@@ -26,6 +26,7 @@ import { PantallaJuegoComponent } from './pantalla-juego/pantalla-juego.componen
   imports: [
     BrowserModule,
     routes,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
